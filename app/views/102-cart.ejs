@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/0001-head-default') %>
+  <title>Shapearoo - Cart</title>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <%- include('partials/1001-browse-header-nav') %>
+
+    <div class="nav-back-container">
+      <ion-icon class="medium-icon" name="chevron-back-outline"></ion-icon>
+      <div class="nav-link"> back to search </div>
+    </div>
+
+    <div class="container-inner">
+      <div class="cart-header-text default-header-text">
+        Print shop selection
+      </div>
+      <div class="cart-order-container">
+        <div class="cart-order-details">
+          <div class="cart-order-details-info">
+            <div class="cart-order-details-shop-img">
+            </div>
+            <div class="cart-order-details-shop-info">
+              <div class="cart-order-details-shop-name">
+                Printaroo
+              </div>
+              <div class="cart-order-details-shop-address">
+                <div>Shop address: </div>
+                <div>303 W 39th Street</div>
+                <div>New York, NY, 10018</div>
+              </div>
+
+              <a class="cart-order-details-shop-change" href="#"> change print shop</a>
+              <a class="cart-order-details-shop-contact" href="#"> contact shop</a>
+
+
+            </div>
+            <div class="cart-order-details-shipping">
+              <div class="cart-order-details-shipping-text">Shipping preferences:</div>
+
+              <div class="cart-order-details-shipping-address">
+                <div>Address: </div>
+                <div>Naomi Nagata</div>
+                <div>309 W 109th Street</div>
+                <div>New York, NY, 10044</div>
+              </div>
+
+              <div class="cart-order-details-shipping-method">
+                <div>Delivery option:</div>
+                <div>UPS 2-day</div>
+              </div>
+
+              <div class="cart-order-details-shipping-cost">
+                $15.00
+              </div>
+
+              <a class="cart-order-details-shipping-edit" href="#"> edit delivery option</a>
+            </div>
+
+            <div class="cart-order-details-payment">
+              <div class="cart-order-details-payment-text">
+                Payment preferences:
+              </div>
+
+              <div class="cart-order-details-payment-method">
+                <div>venmo</div>
+                <div>@naominaomi</div>
+              </div>
+
+              <div class="cart-order-details-payment-address">
+                <div>Billing address:</div>
+                <div>Same as shipping address</div>
+              </div>
+
+              <div class="cart-order-details-payment-invoice">
+                <div>Send invoice to:</div>
+                <div>naominaomi@gmail.com</div>
+              </div>
+
+              <a class="cart-order-details-payment-edit" href="#"> edit payment preferences</a>
+            </div>
+          </div>
+
+          <div class="cart-header-text default-header-text">
+            Review items
+          </div>
+
+          <div class="cart-order-details-review">
+            <div class="cart-order-details-review-head">
+              <div>Qtd</div>
+              <div>Items</div>
+              <div>Subtotal</div>
+              <div>Print Details</div>
+              <div>Subtotal</div>
+              <div>Total</div>
+            </div>
+
+            <!-- CART ORDER ITEM SINGLE -->
+
+            <div class="cart-order-details-item">
+              <div class="cart-order-details-item-qtd">
+                3
+              </div>
+              <div class="cart-order-details-item-info">
+                <div class="cart-order-details-item-image">
+                </div>
+                <div class="cart-order-details-item-text">
+                  <div>Eifell Tower Keychain</div>
+                  <div>by Hantaro2233</div>
+                  <div>$1.50</div>
+                </div>
+
+              </div>
+              <div class="cart-order-details-item-subtotal">
+                $4.50
+              </div>
+              <div class="cart-order-details-print-info">
+
+                <div class="cart-order-details-print-item">
+                  <div class="cart-order-details-print-item-qtd">
+                    (1)
+                  </div>
+                  <div class="cart-order-details-print-item-text">
+                    <div>PLA, Blue ($0.15/gr)</div>
+                    <div>est. weight : 20 gr (ea. $3)</div>
+                    <div>$3</div>
+                  </div>
+                </div>
+
+                <div class="cart-order-details-print-item">
+                  <div class="cart-order-details-print-item-qtd">
+                    (3)
+                  </div>
+                  <div class="cart-order-details-print-item-text">
+                    <div>PLA, Blue ($0.2/gr)</div>
+                    <div>est. weight : 25 gr (ea. $5)</div>
+                    <div>$10</div>
+                  </div>
+                </div>
+
+                <div class="cart-order-details-print-edit">
+                  <a href="#">edit print details</a>
+                </div>
+
+              </div>
+
+              <div class="cart-order-details-print-subtotal">
+                $13
+              </div>
+
+              <div class="cart-order-details-print-total">
+                $17.5
+              </div>
+            </div>
+
+
+            <!-- CART ORDER ITEM SINGLE -->
+
+            <div class="cart-order-details-item">
+              <div class="cart-order-details-item-qtd">
+                4
+              </div>
+              <div class="cart-order-details-item-info">
+                <div class="cart-order-details-item-image">
+                </div>
+                <div class="cart-order-details-item-text">
+                  <div>Yoda desk decor</div>
+                  <div>by Laufeylaufey</div>
+                  <div>$2.00</div>
+                </div>
+
+              </div>
+              <div class="cart-order-details-item-subtotal">
+                $8
+              </div>
+              <div class="cart-order-details-print-info">
+
+                <div class="cart-order-details-print-item">
+                  <div class="cart-order-details-print-item-qtd">
+                    (4)
+                  </div>
+                  <div class="cart-order-details-print-item-text">
+                    <div>PLA, Blue ($0.15/gr)</div>
+                    <div>est. weight : 20 gr (ea. $3)</div>
+                    <div>$12</div>
+                  </div>
+                </div>
+                <a href="#">edit print details</a>
+              </div>
+
+              <div class="cart-order-details-print-subtotal">
+                $12
+              </div>
+
+              <div class="cart-order-details-print-total">
+                $20
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="cart-order-summary">
+
+          <div class="cart-order-summary-container">
+            <div class="cart-order-summary-header">
+              Order Summary
+            </div>
+            <div class="cart-order-summary-items">
+              <div>Items: </div>
+              <div>$37.50</div>
+            </div>
+            <div class="cart-order-summary-shipping">
+              <div>Shipping: </div>
+              <div>$15.50</div>
+            </div>
+            <div class="cart-order-summary-total">
+              <div>Total: </div>
+              <div>$52.50</div>
+            </div>
+            <button class="cart-order-summary-button accent-button">Place Order</button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="default-footer">
+    </div>
+
+  </div>
+
+
+
+</body>
+
+</html>
