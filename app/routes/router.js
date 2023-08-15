@@ -5,8 +5,8 @@ routes.get('/', (req, res) => {
   res.render('000-home');
 });
 
-routes.get('/search', (req, res) => {
-  res.render('100-browse');
+routes.get('/search/item', (req, res) => {
+  res.render('100-browse-item');
 });
 
 routes.get('/search/item-id', (req, res) => {

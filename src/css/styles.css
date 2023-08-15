@@ -432,12 +432,50 @@ body {
     gap: 2rem;
 }
 
+.browse-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.browse-items-label {
+    margin-top: 0.8rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.browse-items-name {
+    font-size: 1.2rem;
+}
+
+.browse-items-btn-add {
+    font-size: 2rem;
+    border-radius: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    background-color: rgba(255, 255, 255, 0);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
 .browse-items-display {
     width: 19.1rem;
     height: 20rem;
     background-color: rgb(223, 223, 223);
     border-radius: 1rem;
+   
 }
+
+
 
 /* -------------- 101-BROWSE-ITEM-DETAILS | ITEM DESCRIPTION ------------- */
 
@@ -1031,8 +1069,8 @@ body {
 }
 
 .browse-shop-past-img {
-    width: 14rem;
-    height: 14rem;
+    width: 15rem;
+    height: 15rem;
     background-color: #dadada;
     border-radius: 1rem;
 }
