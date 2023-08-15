@@ -18,7 +18,11 @@ routes.get('/cart/id', (req, res) => {
 });
 
 routes.get('/search/shop/id', (req, res) => {
-  res.render('103-browse-shop');
+  res.render('103-browse-shop-details');
+});
+
+routes.get('/search/shop', (req, res) => {
+  res.render('104-browse-shop');
 });
 
 module.exports = routes;

@@ -874,7 +874,7 @@ body {
 
 
 
-/* ------------ 103-BROWSE-SHOP ------------ */
+/* ------------ 103-BROWSE-SHOP-DETAILS ------------ */
 
 
 
@@ -1037,6 +1037,99 @@ body {
     border-radius: 1rem;
 }
 
+
+
+/* ------------ 104-BROWSE-SHOP ------------ */
+
+
+.browse-shops {
+    width: 84rem;
+    /* height: 80rem; */
+
+    margin-top: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* background-color: #93aff587; */
+
+    display: flex;
+    flex-wrap: wrap;
+
+    
+}
+
+
+.browse-shops-item {
+    display: flex;
+
+    margin: 1.5rem;
+
+    width: 39rem;
+    height: 16rem;
+
+    /* background-color: rgba(250, 235, 215, 0.599); */
+
+
+}
+
+.browse-shops-item-image {
+    width: 17rem;
+    height: 17rem;
+
+    background-color: #b1b1b1;
+    border-radius: 1rem;
+}
+
+.browse-shops-item-information {
+    margin-left: 1rem;
+}
+
+.browse-shops-item-name {
+    font-size: 2rem;
+}
+
+.browse-shops-item-rating {
+    display: flex;
+    font-size: 1.2rem;
+    gap: 0.5rem;
+}
+
+.browse-shops-item-address {
+    font-size: 1.2rem;
+}
+
+.browse-shops-item-filament {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+
+    font-size: 1.5rem;
+}
+
+.browse-shops-item-price {
+    display: flex;
+    gap: 0.25rem;
+    font-size: 1.2rem;
+}
+
+.browse-shops-item-delivery {
+    display: flex;
+    gap: 0.25rem;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.browse-shops-item-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.browse-shops-item-btn {
+    margin-top: 0.8rem;
+    height: 2.5rem;
+    width: 100%;
+    border-radius: 0.5rem;
+}
 
 
 
