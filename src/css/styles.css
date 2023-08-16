@@ -103,7 +103,7 @@ body {
     --clr-btn-active: #4579fc;
     --clr-border-light: #c6c6c6;
 
-    --clr-image-template: #b1b1b1;
+    --clr-image-template: #cecece;
 }
 
 .container {
@@ -1114,7 +1114,7 @@ body {
     width: 17rem;
     height: 17rem;
 
-    background-color: #b1b1b1;
+    background-color: var(--clr-image-template);
     border-radius: 1rem;
 }
 
@@ -1168,6 +1168,132 @@ body {
     width: 100%;
     border-radius: 0.5rem;
 }
+
+
+/* ------------ 105-DESIGNER-PROFILE ------------ */
+
+
+.designer-profile {
+    display: flex;
+    width: 98rem;
+    /* background-color: aqua; */
+
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.designer-profile-image-left {
+    
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    
+    margin-right: 1.25rem;
+}
+
+.designer-profile-image {
+    width: 14.75rem;
+    height: 14.75rem;
+
+    border-radius: 1rem;
+    
+    background-color: var(--clr-image-template);
+}
+
+.designer-profile-image-middle {
+    width: 31rem;
+    height: 31rem;
+    border-radius: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    background-color: var(--clr-image-template);
+
+} 
+
+.designer-profile-information {
+    width: 36rem;
+    height: 31rem;
+
+    margin-left: 1.25rem;
+    /* background-color: #4579fc70; */
+}
+
+.designer-profile-name {
+    font-size: 2.5rem;
+}
+
+.designer-profile-dates {
+    font-size: 1.2rem;
+}
+
+.designer-profile-links {
+    font-size: 1.2rem;
+}
+
+.designer-profile-bio {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.designer-profile-contact {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.designer-designs {
+    width: 98rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    margin-bottom: 8rem;
+}
+
+.designer-designs-header {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.designer-items {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.designer-item {
+    width: 18rem;
+}
+
+.designer-item-image {
+    width: 18rem;
+    height: 18rem;
+    background-color: var(--clr-image-template);
+    border-radius: 1rem;
+}
+
+.designer-item-label {
+    margin-top: 0.8rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.designer-item-name {
+    font-size: 1.2rem;
+}
+
+.designer-item-btn-add {
+    font-size: 2rem;
+    border-radius: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 
 

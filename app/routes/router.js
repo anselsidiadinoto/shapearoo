@@ -25,4 +25,8 @@ routes.get('/search/shop', (req, res) => {
   res.render('104-browse-shop');
 });
 
+routes.get('/search/designer/id', (req, res) => {
+  res.render('105-desinger-profile');
+});
+
 module.exports = routes;
