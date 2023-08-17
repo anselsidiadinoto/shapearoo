@@ -468,9 +468,17 @@ body {
 
 
 .browse-items-display {
-    width: 19.1rem;
+    /* width: 19.1rem;
     height: 20rem;
     background-color: rgb(223, 223, 223);
+    border-radius: 1rem; */
+   
+}
+
+.browse-items-display img {
+    width: 19.1rem;
+    height: 20rem;
+    object-fit: cover;
     border-radius: 1rem;
    
 }
@@ -1114,7 +1122,12 @@ body {
     width: 17rem;
     height: 17rem;
 
-    background-color: var(--clr-image-template);
+    /* background-color: var(--clr-image-template); */
+    border-radius: 1rem;
+}
+
+.browse-shops-item-image img {
+    object-fit: cover;
     border-radius: 1rem;
 }
 

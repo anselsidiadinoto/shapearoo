@@ -4,14 +4,17 @@
 \! echo ""
 
 \! echo "table shops"
-DROP TABLE IF EXISTS shops;
+DROP TABLE IF EXISTS shops CASCADE;
 CREATE TABLE shops(
     id SERIAL,
-    shop_name TEXT
+    shop_name TEXT,
+
+    CONSTRAINT pk_shops_id PRIMARY KEY(id),
+    CONSTRAINT uc_shops_id UNIQUE(id)
 );
 
 \! echo "table shop_date"
-DROP TABLE IF EXISTS shop_date;
+DROP TABLE IF EXISTS shop_date CASCADE;
 CREATE TABLE shop_date(
     shop_id INT,
     print_date TEXT,
@@ -19,21 +22,21 @@ CREATE TABLE shop_date(
 );
 
 \! echo "table shop_location"
-DROP TABLE IF EXISTS shop_location;
+DROP TABLE IF EXISTS shop_location CASCADE;
 CREATE TABLE shop_location(
     shop_id INT,
     shop_address TEXT
 );
 
 \! echo "table shop_printers"
-DROP TABLE IF EXISTS shop_printers;
+DROP TABLE IF EXISTS shop_printers CASCADE;
 CREATE TABLE shop_printers(
     shop_id INT,
     shop_printer TEXT
 );
 
 \! echo "table shop_filaments"
-DROP TABLE IF EXISTS shop_filaments;
+DROP TABLE IF EXISTS shop_filaments CASCADE;
 CREATE TABLE shop_filaments(
     shop_id INT,
     shop_filament_type TEXT,
@@ -41,14 +44,15 @@ CREATE TABLE shop_filaments(
 );
 
 \! echo "table shop_filament_colors"
-DROP TABLE IF EXISTS shop_filament_colors;
+DROP TABLE IF EXISTS shop_filament_colors CASCADE;
 CREATE TABLE shop_filament_colors(
+    shop_id INT,
     shop_filament_type TEXT,
     shop_filament_color TEXT
 );
 
 \! echo "table shop_images"
-DROP TABLE IF EXISTS shop_images;
+DROP TABLE IF EXISTS shop_images CASCADE;
 CREATE TABLE shop_images(
     shop_id INT,
     shop_image_position TEXT,
@@ -56,7 +60,7 @@ CREATE TABLE shop_images(
 );
 
 \! echo "table shop_bio"
-DROP TABLE IF EXISTS shop_bio;
+DROP TABLE IF EXISTS shop_bio CASCADE;
 CREATE TABLE shop_bio(
     shop_id INT,
     shop_bio_paragraph INT,
@@ -65,6 +69,36 @@ CREATE TABLE shop_bio(
 
 \! echo ""
 
+\! echo "foreign key shop_date"
+ALTER TABLE shop_date ADD CONSTRAINT fk_shop_date_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key shop_location"
+ALTER TABLE shop_location ADD CONSTRAINT fk_shop_location_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key shop_printers"
+ALTER TABLE shop_printers ADD CONSTRAINT fk_shop_printer_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key shop_filaments"
+ALTER TABLE shop_filaments ADD CONSTRAINT fk_shop_filaments_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key shop_filament_colors"
+ALTER TABLE shop_filament_colors ADD CONSTRAINT fk_shop_filament_colors_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key shop_images"
+ALTER TABLE shop_images ADD CONSTRAINT fk_shop_images_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key shop_bio"
+ALTER TABLE shop_bio ADD CONSTRAINT fk_shop_bio_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+\! echo ""
 ----------------- SHOP VALUES -----------------
 
 \! echo "insert shops"
@@ -119,9 +153,7 @@ VALUES
 
 \! echo "insert shop_filaments"
 INSERT INTO shop_filaments
-    (shop_id, 
-     shop_filament_type, 
-     shop_filament_price)
+    (shop_id, shop_filament_type, shop_filament_price)
 VALUES
     (1, 'PLA', 0.2), 
     (1, 'ABS', 0.25), 
@@ -143,110 +175,110 @@ VALUES
 
 
 \! echo "insert shop_filament_colors"
-INSERT INTO shop_filament_colors(shop_filament_type, shop_filament_color)
+INSERT INTO shop_filament_colors(shop_id, shop_filament_type, shop_filament_color)
 VALUES
-    ('PLA', 'Pink'),
-    ('PLA', 'Yellow'),
-    ('PLA', 'Green'),
-    ('PLA', 'Blue'),
-    ('PLA', 'Purple'),
-    ('PLA', 'Red'),
-    ('PLA', 'Black'),
-    ('PLA', 'White'),
-    ('ABS', 'Pink'),
-    ('ABS', 'Yellow'),
-    ('ABS', 'Green'),
-    ('ABS', 'Blue'),
-    ('ABS', 'Purple'),
-    ('ABS', 'Red'),
-    ('ABS', 'Black'),
-    ('ABS', 'White'),
-    ('Resin', 'White'),
-    ('Resin', 'Clear'),
+    (1, 'PLA', 'Pink'),
+    (1, 'PLA', 'Yellow'),
+    (1, 'PLA', 'Green'),
+    (1, 'PLA', 'Blue'),
+    (1, 'PLA', 'Purple'),
+    (1, 'PLA', 'Red'),
+    (1, 'PLA', 'Black'),
+    (1, 'PLA', 'White'),
+    (1, 'ABS', 'Pink'),
+    (1, 'ABS', 'Yellow'),
+    (1, 'ABS', 'Green'),
+    (1, 'ABS', 'Blue'),
+    (1, 'ABS', 'Purple'),
+    (1, 'ABS', 'Red'),
+    (1, 'ABS', 'Black'),
+    (1, 'ABS', 'White'),
+    (1, 'Resin', 'White'),
+    (1, 'Resin', 'Clear'),
 
-    ('PLA', 'Pink'),
-    ('PLA', 'Yellow'),
-    ('PLA', 'Green'),
-    ('PLA', 'Blue'),
-    ('PLA', 'Purple'),
-    ('PLA', 'Red'),
-    ('PLA', 'Black'),
-    ('PLA', 'White'),
-    ('PLA', 'Pink'),
-    ('Nylon', 'Yellow'),
-    ('Nylon', 'Green'),
-    ('Nylon', 'Blue'),
-    ('Nylon', 'Purple'),
-    ('Nylon', 'Red'),
-    ('Nylon', 'Black'),
-    ('Nylon', 'White'),
-    ('Resin', 'White'),
-    ('Resin', 'Clear'),
+    (2, 'PLA', 'Pink'),
+    (2, 'PLA', 'Yellow'),
+    (2, 'PLA', 'Green'),
+    (2, 'PLA', 'Blue'),
+    (2, 'PLA', 'Purple'),
+    (2, 'PLA', 'Red'),
+    (2, 'PLA', 'Black'),
+    (2, 'PLA', 'White'),
+    (2, 'PLA', 'Pink'),
+    (2, 'Nylon', 'Yellow'),
+    (2, 'Nylon', 'Green'),
+    (2, 'Nylon', 'Blue'),
+    (2, 'Nylon', 'Purple'),
+    (2, 'Nylon', 'Red'),
+    (2, 'Nylon', 'Black'),
+    (2, 'Nylon', 'White'),
+    (2, 'Resin', 'White'),
+    (2, 'Resin', 'Clear'),
 
-    ('PLA', 'Pink'),
-    ('PLA', 'Yellow'),
-    ('PLA', 'Green'),
-    ('PLA', 'Blue'),
-    ('PLA', 'Purple'),
-    ('PLA', 'Red'),
-    ('PLA', 'Black'),
-    ('PLA', 'White'),
-    ('Resin', 'White'),
-    ('Resin', 'Clear'),
+    (3, 'PLA', 'Pink'),
+    (3, 'PLA', 'Yellow'),
+    (3, 'PLA', 'Green'),
+    (3, 'PLA', 'Blue'),
+    (3, 'PLA', 'Purple'),
+    (3, 'PLA', 'Red'),
+    (3, 'PLA', 'Black'),
+    (3, 'PLA', 'White'),
+    (3, 'Resin', 'White'),
+    (3, 'Resin', 'Clear'),
 
-    ('PLA', 'Yellow'),
-    ('PLA', 'Pink'),
-    ('PLA', 'Green'),
-    ('PLA', 'Blue'),
-    ('PLA', 'Purple'),
-    ('PLA', 'Red'),
-    ('PLA', 'Black'),
-    ('PLA', 'White'),
-    ('PLA', 'Pink'),
-    ('ABS', 'Yellow'),
-    ('ABS', 'Green'),
-    ('ABS', 'Blue'),
-    ('ABS', 'Purple'),
-    ('ABS', 'Red'),
-    ('ABS', 'Black'),
-    ('ABS', 'White'),
-    ('Wood', 'Purple'),
-    ('Wood', 'Red'),
-    ('Wood', 'Black'),
-    ('Wood', 'White'),
-    ('Resin', 'White'),
-    ('Resin', 'Clear'),
+    (4, 'PLA', 'Yellow'),
+    (4, 'PLA', 'Pink'),
+    (4, 'PLA', 'Green'),
+    (4, 'PLA', 'Blue'),
+    (4, 'PLA', 'Purple'),
+    (4, 'PLA', 'Red'),
+    (4, 'PLA', 'Black'),
+    (4, 'PLA', 'White'),
+    (4, 'PLA', 'Pink'),
+    (4, 'ABS', 'Yellow'),
+    (4, 'ABS', 'Green'),
+    (4, 'ABS', 'Blue'),
+    (4, 'ABS', 'Purple'),
+    (4, 'ABS', 'Red'),
+    (4, 'ABS', 'Black'),
+    (4, 'ABS', 'White'),
+    (4, 'Wood', 'Purple'),
+    (4, 'Wood', 'Red'),
+    (4, 'Wood', 'Black'),
+    (4, 'Wood', 'White'),
+    (4, 'Resin', 'White'),
+    (4, 'Resin', 'Clear'),
 
-    ('PLA', 'Pink'),
-    ('PLA', 'Yellow'),
-    ('PLA', 'Green'),
-    ('PLA', 'Blue'),
-    ('PLA', 'Purple'),
-    ('PLA', 'Red'),
-    ('PLA', 'Black'),
-    ('PLA', 'White'),
-    ('PLA', 'Pink'),
-    ('ABS', 'Yellow'),
-    ('ABS', 'Green'),
-    ('ABS', 'Blue'),
-    ('ABS', 'Purple'),
-    ('ABS', 'Red'),
-    ('ABS', 'Black'),
-    ('ABS', 'White'),
-    ('Resin', 'White'),
-    ('Resin', 'Clear'),
+    (5, 'PLA', 'Pink'),
+    (5, 'PLA', 'Yellow'),
+    (5, 'PLA', 'Green'),
+    (5, 'PLA', 'Blue'),
+    (5, 'PLA', 'Purple'),
+    (5, 'PLA', 'Red'),
+    (5, 'PLA', 'Black'),
+    (5, 'PLA', 'White'),
+    (5, 'PLA', 'Pink'),
+    (5, 'ABS', 'Yellow'),
+    (5, 'ABS', 'Green'),
+    (5, 'ABS', 'Blue'),
+    (5, 'ABS', 'Purple'),
+    (5, 'ABS', 'Red'),
+    (5, 'ABS', 'Black'),
+    (5, 'ABS', 'White'),
+    (5, 'Resin', 'White'),
+    (5, 'Resin', 'Clear'),
 
-    ('PLA', 'Pink'),
-    ('PLA', 'Yellow'),
-    ('PLA', 'Green'),
-    ('PLA', 'Blue'),
-    ('PLA', 'Purple'),
-    ('PLA', 'Red'),
-    ('PLA', 'Black'),
-    ('PLA', 'White'),
-    ('Carbon Fiber', 'White'),
-    ('Carbon Fiber', 'Clear'),
-    ('Carbon Fiber', 'Black');
+    (6, 'PLA', 'Pink'),
+    (6, 'PLA', 'Yellow'),
+    (6, 'PLA', 'Green'),
+    (6, 'PLA', 'Blue'),
+    (6, 'PLA', 'Purple'),
+    (6, 'PLA', 'Red'),
+    (6, 'PLA', 'Black'),
+    (6, 'PLA', 'White'),
+    (6, 'Carbon Fiber', 'White'),
+    (6, 'Carbon Fiber', 'Clear'),
+    (6, 'Carbon Fiber', 'Black');
 
 \! echo "insert shop_bio"
 INSERT INTO shop_bio(shop_id, shop_bio_paragraph, shop_bio_text) 
@@ -311,7 +343,7 @@ VALUES
     (3, 5, 'https://www.geeetech.com/blog/wp-content/uploads/2018/01/piklerick-e1516366582913.jpg'),
 
     (4, 1, 'https://i.etsystatic.com/25969312/r/il/3f39e4/2692629675/il_570xN.2692629675_7kze.jpg'),
-    (4, 2, 'https://www.clipartmax.com/png/middle/366-3663260_3d-print-shop-ultimaker-logo.png'),
+    (4, 2, 'https://dcassetcdn.com/design_img/2588164/102186/102186_13878338_2588164_f696523f_image.png'),
     (4, 3, 'https://stlmotherhood.com/wp-content/uploads/2020/05/3d-printed-toys-Minecraft-egg-fidget-top.jpg'),
     (4, 4, 'https://static.dezeen.com/uploads/2013/07/dezeen_The-Sugar-Lab-by-Kyle-and-Liz-von-Hasseln-featured.jpg'),
     (4, 5, 'https://images.squarespace-cdn.com/content/v1/54d135aae4b0553df777d404/1432052394765-PL9655XZNX0S59LUM1KS/iphone-3d-printed-heels-3.jpg?format=1000w'),
@@ -332,14 +364,17 @@ VALUES
 \! echo ""
 
 \! echo "table designers"
-DROP TABLE IF EXISTS designers;
+DROP TABLE IF EXISTS designers CASCADE;
 CREATE TABLE designers(
     id SERIAL,
-    designer_name TEXT
+    designer_name TEXT,
+
+    CONSTRAINT pk_designers_id PRIMARY KEY(id),
+    CONSTRAINT uc_designers_id UNIQUE(id)
 );
 
 \! echo "table designer_date"
-DROP TABLE IF EXISTS designer_date;
+DROP TABLE IF EXISTS designer_date CASCADE;
 CREATE TABLE designer_date(
     designer_id INT,
     designer_date TEXT,
@@ -347,7 +382,7 @@ CREATE TABLE designer_date(
 );
 
 \! echo "table designer_bio"
-DROP TABLE IF EXISTS designer_bio;
+DROP TABLE IF EXISTS designer_bio CASCADE;
 CREATE TABLE designer_bio(
     designer_id INT,
     designer_bio_paragraph INT,
@@ -355,13 +390,26 @@ CREATE TABLE designer_bio(
 );
 
 \! echo "table designer_images"
-DROP TABLE IF EXISTS designer_images;
+DROP TABLE IF EXISTS designer_images CASCADE;
 CREATE TABLE designer_images(
     designer_id INT,
     designer_image_position TEXT,
     designer_image_url TEXT
 );
+\! echo ""
 
+\! echo "foreign key designer_date"
+ALTER TABLE designer_date ADD CONSTRAINT fk_designer_date_designer_id
+    FOREIGN KEY(designer_id)
+    REFERENCES designers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key designer_bio"
+ALTER TABLE designer_bio ADD CONSTRAINT fk_designer_bio_designer_id
+    FOREIGN KEY(designer_id)
+    REFERENCES designers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key designer_images"
+ALTER TABLE designer_images ADD CONSTRAINT fk_designer_images_designer_id
+    FOREIGN KEY(designer_id)
+    REFERENCES designers(id) ON UPDATE CASCADE ON DELETE CASCADE;
 \! echo ""
 
 \! echo "insert designers"
@@ -474,25 +522,28 @@ VALUES
 \! echo ""
 
 \! echo "table designs"
-DROP TABLE IF EXISTS designs;
+DROP TABLE IF EXISTS designs CASCADE;
 CREATE TABLE designs(
     id SERIAL,
     designer_id INT,
     design_name TEXT,
     design_price DECIMAL,
-    design_weight DECIMAL
+    design_weight DECIMAL,
+
+    CONSTRAINT pk_designs_id PRIMARY KEY(id),
+    CONSTRAINT uc_designs_id UNIQUE(id)
 );
 
-\! echo "table_design_images"
-DROP TABLE IF EXISTS design_images;
+\! echo "table design_images"
+DROP TABLE IF EXISTS design_images CASCADE;
 CREATE TABLE design_images(
     design_id INT,
     design_image_position TEXT,
     design_image_url TEXT
 );
 
-\! echo "table_design_information"
-DROP TABLE IF EXISTS design_information;
+\! echo "table design_information"
+DROP TABLE IF EXISTS design_information CASCADE;
 CREATE TABLE design_information(
     design_id INT,
     design_information_paragraph INT,
@@ -500,6 +551,21 @@ CREATE TABLE design_information(
 );
 
 \! echo ""
+\! echo "foreign key designs"
+ALTER TABLE designs ADD CONSTRAINT fk_designs_designer_id
+    FOREIGN KEY(designer_id)
+    REFERENCES designers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key design_images"
+ALTER TABLE design_images ADD CONSTRAINT fk_design_images_design_id
+    FOREIGN KEY(design_id)
+    REFERENCES designs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+\! echo "foreign key design_information"
+ALTER TABLE design_information ADD CONSTRAINT fk_design_information_design_id
+    FOREIGN KEY(design_id)
+    REFERENCES designs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+\! echo ""
+
 
 \! echo "insert designs"
 INSERT INTO designs(designer_id, design_name, design_price, design_weight)
@@ -588,12 +654,107 @@ VALUES
 
 \! echo ""
 
+
+\! echo "table cart"
+DROP TABLE IF EXISTS cart;
+CREATE TABLE cart(
+    id SERIAL,
+    cart_user TEXT
+);
+
+\! echo "table cart_subtotal_design"
+DROP TABLE IF EXISTS cart_subtotal_design;
+CREATE TABLE cart_subtotal_design(
+    cart_id INT,
+    design_id INT,
+    design_quantity INT
+);
+
+\! echo "table cart_subtotal_shop"
+DROP TABLE IF EXISTS cart_subtotal_shop;
+CREATE TABLE cart_subtotal_shop(
+    cart_id INT,
+    design_id INT,
+    print_quantity INT,
+    print_filament TEXT,
+    print_color TEXT
+);
+
+\! echo ""
+
+\! echo "insert cart"
+INSERT INTO cart(cart_user)
+VALUES
+    ('default_cart');
+
+\! echo ""
+
+
+
+\! echo "-------views--------"
+
+\! echo ""
+
+CREATE VIEW designs_search AS
+SELECT 
+    designs.id AS design_id,
+    designs.design_name AS design_name,
+    designs.designer_id AS designer_id,
+    designers.designer_name AS designer_name,
+    designs.design_price AS price,
+    design_images.design_image_position AS loc,
+    design_images.design_image_url AS img_url
+
+    FROM designs 
+    INNER JOIN design_images ON designs.id = design_images.design_id
+    INNER JOIN designers ON designs.designer_id = designers.id;
+
+CREATE VIEW shops_search AS
+SELECT
+    shops.id,
+    shops.shop_name,
+    shop_location.shop_address
+
+    FROM shops
+    INNER JOIN shop_location ON shops.id = shop_location.shop_id;
+
+CREATE VIEW shops_search_filaments AS
+SELECT 
+    shops_search.id,
+    shop_filaments.shop_filament_type AS type,
+    shop_filaments.shop_filament_price AS price
+
+    FROM shops_search
+    INNER JOIN shop_filaments ON shops_search.id = shop_filaments.shop_id;
+
+CREATE VIEW shops_search_images AS
+SELECT
+    shops_search.id,
+    shop_images.shop_image_position AS pos,
+    shop_images.shop_image_url AS url
+
+    FROM shops_search
+    INNER JOIN shop_images ON shops_search.id = shop_images.shop_id;
+
+
+
+
+-- \! echo "view design_subtotal"
+-- CREATE VIEW design_subtotal AS
+-- SELECT
+--     cart_subtotal_design.cart_id AS id_c,
+--     cart_subtotal_design.design_id AS id_d,
+--     designs.design_price AS price,
+--     cart_subtotal_design.design_quantity AS qtd,
+--     price * qtd AS subtotal
+
+-- FROM designs JOIN cart_subtotal_design
+-- ON designs.id = design_subtotal.design_id ;
+
+
+-- \! echo "___________________________________________________________________________"
+
+
 ---------------- CONSOLE TEST ------------------
 
--- SELECT * FROM shops;
--- SELECT * FROM shop_location;
--- SELECT * FROM shop_filaments;
--- SELECT * FROM shop_filament_colors;
--- SELECT * FROM shop_bio;
--- SELECT * FROM designers;
--- SELECT * FROM designs;
+SELECT * FROM shops_search_images WHERE pos = '1';

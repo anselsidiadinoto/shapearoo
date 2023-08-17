@@ -9,11 +9,11 @@ app.set('views', './app/views');
 app.set('view engine', 'ejs');
 
 // Routes
-const routes = require('./app/routes/router');
-app.use('/', routes);
+const router = require('./app/routes/routes');
+app.use('/', router);
 
 app.listen(3000, function () {
-    console.log('server is up baby');
+  console.log('server is up baby');
 });
 
 // ------------ TEMPLATES FOR OTHER STATIC FILES -----------------

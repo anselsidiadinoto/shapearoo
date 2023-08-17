@@ -20,11 +20,16 @@
 
     <div class="browse-shops">
 
+      <% for(i = 0; i < shop.length; i++) { %>
+
+
       <div class="browse-shops-item">
-        <div class="browse-shops-item-image"></div>
+        <div class="browse-shops-item-image">
+          <img src="<%= shop[i].image_url %>" alt="">
+        </div>
         <div class="browse-shops-item-information">
           <div class="browse-shops-item-name">
-            Printaroo
+            <%= shop[i].shop_name %>
           </div>
           <div class="browse-shops-item-rating">
             <div class="browse-shops-item-rating-star">
@@ -39,17 +44,17 @@
             </div>
           </div>
           <div class="browse-shops-item-address">
-            Upper West Side, Manhattan, NY
+            <%= shop[i].shop_address %>
           </div>
           <div class="browse-shops-item-filament">
-            <div>PLA</div>
-            <div>PLS</div>
-            <div>Resin</div>
+            <% for(j = 0; j < shop[i].filaments.length; j++) {%>
+            <div><%= shop[i].filaments[j] %></div>
+            <% } %>
           </div>
           <div class="browse-shops-item-price">
-            <div>$0.75/gr</div>
+            <div>$<%= shop[i].min_price %>/gr</div>
             <div>-</div>
-            <div>$2.50/gr</div>
+            <div>$<%= shop[i].max_price %>/gr</div>
           </div>
           <div class="browse-shops-item-delivery">
             <div>pickup</div>
@@ -66,251 +71,10 @@
         </div>
       </div>
 
+      <% } %>
 
 
 
-      <div class="browse-shops-item">
-        <div class="browse-shops-item-image"></div>
-        <div class="browse-shops-item-information">
-          <div class="browse-shops-item-name">
-            Printaroo
-          </div>
-          <div class="browse-shops-item-rating">
-            <div class="browse-shops-item-rating-star">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star-half-outline"></ion-icon>
-              <ion-icon name="star-outline"></ion-icon>
-            </div>
-            <div class="browse-shops-item-rating-text">
-              (16) Ratings, (50) Prints
-            </div>
-          </div>
-          <div class="browse-shops-item-address">
-            Upper West Side, Manhattan, NY
-          </div>
-          <div class="browse-shops-item-filament">
-            <div>PLA</div>
-            <div>PLS</div>
-            <div>Resin</div>
-          </div>
-          <div class="browse-shops-item-price">
-            <div>$0.75/gr</div>
-            <div>-</div>
-            <div>$2.50/gr</div>
-          </div>
-          <div class="browse-shops-item-delivery">
-            <div>pickup</div>
-            <div>|</div>
-            <div>delivery</div>
-          </div>
-
-          <div class="browse-shops-item-buttons">
-            <button class="browse-shops-item-btn default-button">Select Shop</button>
-            <button class="browse-shops-item-btn default-button">Profile</button>
-
-          </div>
-
-        </div>
-      </div>
-
-
-
-
-      <div class="browse-shops-item">
-        <div class="browse-shops-item-image"></div>
-        <div class="browse-shops-item-information">
-          <div class="browse-shops-item-name">
-            Printaroo
-          </div>
-          <div class="browse-shops-item-rating">
-            <div class="browse-shops-item-rating-star">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star-half-outline"></ion-icon>
-              <ion-icon name="star-outline"></ion-icon>
-            </div>
-            <div class="browse-shops-item-rating-text">
-              (16) Ratings, (50) Prints
-            </div>
-          </div>
-          <div class="browse-shops-item-address">
-            Upper West Side, Manhattan, NY
-          </div>
-          <div class="browse-shops-item-filament">
-            <div>PLA</div>
-            <div>PLS</div>
-            <div>Resin</div>
-          </div>
-          <div class="browse-shops-item-price">
-            <div>$0.75/gr</div>
-            <div>-</div>
-            <div>$2.50/gr</div>
-          </div>
-          <div class="browse-shops-item-delivery">
-            <div>pickup</div>
-            <div>|</div>
-            <div>delivery</div>
-          </div>
-
-          <div class="browse-shops-item-buttons">
-            <button class="browse-shops-item-btn default-button">Select Shop</button>
-            <button class="browse-shops-item-btn default-button">Profile</button>
-
-          </div>
-
-        </div>
-      </div>
-
-
-
-
-      <div class="browse-shops-item">
-        <div class="browse-shops-item-image"></div>
-        <div class="browse-shops-item-information">
-          <div class="browse-shops-item-name">
-            Printaroo
-          </div>
-          <div class="browse-shops-item-rating">
-            <div class="browse-shops-item-rating-star">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star-half-outline"></ion-icon>
-              <ion-icon name="star-outline"></ion-icon>
-            </div>
-            <div class="browse-shops-item-rating-text">
-              (16) Ratings, (50) Prints
-            </div>
-          </div>
-          <div class="browse-shops-item-address">
-            Upper West Side, Manhattan, NY
-          </div>
-          <div class="browse-shops-item-filament">
-            <div>PLA</div>
-            <div>PLS</div>
-            <div>Resin</div>
-          </div>
-          <div class="browse-shops-item-price">
-            <div>$0.75/gr</div>
-            <div>-</div>
-            <div>$2.50/gr</div>
-          </div>
-          <div class="browse-shops-item-delivery">
-            <div>pickup</div>
-            <div>|</div>
-            <div>delivery</div>
-          </div>
-
-          <div class="browse-shops-item-buttons">
-            <button class="browse-shops-item-btn default-button">Select Shop</button>
-            <button class="browse-shops-item-btn default-button">Profile</button>
-
-          </div>
-
-        </div>
-      </div>
-
-
-
-
-      <div class="browse-shops-item">
-        <div class="browse-shops-item-image"></div>
-        <div class="browse-shops-item-information">
-          <div class="browse-shops-item-name">
-            Printaroo
-          </div>
-          <div class="browse-shops-item-rating">
-            <div class="browse-shops-item-rating-star">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star-half-outline"></ion-icon>
-              <ion-icon name="star-outline"></ion-icon>
-            </div>
-            <div class="browse-shops-item-rating-text">
-              (16) Ratings, (50) Prints
-            </div>
-          </div>
-          <div class="browse-shops-item-address">
-            Upper West Side, Manhattan, NY
-          </div>
-          <div class="browse-shops-item-filament">
-            <div>PLA</div>
-            <div>PLS</div>
-            <div>Resin</div>
-          </div>
-          <div class="browse-shops-item-price">
-            <div>$0.75/gr</div>
-            <div>-</div>
-            <div>$2.50/gr</div>
-          </div>
-          <div class="browse-shops-item-delivery">
-            <div>pickup</div>
-            <div>|</div>
-            <div>delivery</div>
-          </div>
-
-          <div class="browse-shops-item-buttons">
-            <button class="browse-shops-item-btn default-button">Select Shop</button>
-            <button class="browse-shops-item-btn default-button">Profile</button>
-
-          </div>
-
-        </div>
-      </div>
-
-
-
-
-
-      <div class="browse-shops-item">
-        <div class="browse-shops-item-image"></div>
-        <div class="browse-shops-item-information">
-          <div class="browse-shops-item-name">
-            Printaroo
-          </div>
-          <div class="browse-shops-item-rating">
-            <div class="browse-shops-item-rating-star">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star-half-outline"></ion-icon>
-              <ion-icon name="star-outline"></ion-icon>
-            </div>
-            <div class="browse-shops-item-rating-text">
-              (16) Ratings, (50) Prints
-            </div>
-          </div>
-          <div class="browse-shops-item-address">
-            Upper West Side, Manhattan, NY
-          </div>
-          <div class="browse-shops-item-filament">
-            <div>PLA</div>
-            <div>PLS</div>
-            <div>Resin</div>
-          </div>
-          <div class="browse-shops-item-price">
-            <div>$0.75/gr</div>
-            <div>-</div>
-            <div>$2.50/gr</div>
-          </div>
-          <div class="browse-shops-item-delivery">
-            <div>pickup</div>
-            <div>|</div>
-            <div>delivery</div>
-          </div>
-
-          <div class="browse-shops-item-buttons">
-            <button class="browse-shops-item-btn default-button">Select Shop</button>
-            <button class="browse-shops-item-btn default-button">Profile</button>
-
-          </div>
-
-        </div>
-      </div>
 
     </div>
 
