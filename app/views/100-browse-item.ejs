@@ -19,12 +19,12 @@
 
       <div class="browse-items">
         <div class="browse-items-display">
-          <img src="<%= info.img_url %>" alt="">
+          <img src="<%= info.img_url %>" alt="" onclick="redirect(`/search/item/<%= info.design_id %>`)">
         </div>
         <div class="browse-items-label">
           <div class="browse-items-description">
-            <div class="browse-items-name"><%= info.design_name %></div>
-            <div class="browse-items-creator">by <%= info.designer_name %></div>
+            <div class="browse-items-name" onclick="redirect(`/search/item/<%= info.design_id %>`)"><%= info.design_name %></div>
+            <div class="browse-items-creator" onclick="redirect(`/search/designer/<%= info.designer_id %>`)">by <%= info.designer_name %></div>
           </div>
           <button class="browse-items-btn-add default-button">+</button>
         </div>

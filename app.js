@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 // Static Files
 app.use('/css', express.static(__dirname + '/src/css'));
+app.use('/js', express.static(__dirname + '/src/js'));
 
 // Templating Engine
 app.set('views', './app/views');

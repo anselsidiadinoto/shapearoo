@@ -377,7 +377,7 @@ CREATE TABLE designers(
 DROP TABLE IF EXISTS designer_date CASCADE;
 CREATE TABLE designer_date(
     designer_id INT,
-    designer_date TEXT,
+    design_date TEXT,
     join_date TEXT
 );
 
@@ -419,7 +419,7 @@ VALUES
     ('Muds3DGoods'),
     ('Yorkshire3D'),
     ('LostTravelerLee3D'),
-    ('3DConcemptToCreation'),
+    ('3DConceptToCreation'),
     ('STL3DPrintGod'),
     ('7Printz'),
     ('WangMander'),
@@ -427,7 +427,7 @@ VALUES
     ('DERXYCRAFT');
 
 \! echo "insert designer_date"
-INSERT INTO designer_date(designer_id, designer_date, join_date)
+INSERT INTO designer_date(designer_id, design_date, join_date)
 VALUES
     (1,'2015','2023'),
     (2,'2013','2022'),
@@ -471,7 +471,7 @@ VALUES
 
     (3, 1, 'https://assets.rbl.ms/26144911/origin.jpg'),
     (3, 2, 'https://www.yankodesign.com/images/design_news/2022/01/this-parametric-3d-printed-sneaker-is-made-entirely-out-of-one-single-flexible-material/parametriks_print_001_2.jpg'),
-    (3, 3, 'https://www.google.com/url?sa=i&url=https%3A%2F%2F3dshoes.com%2Fblogs%2Fnews%2Fparametric-3d-printed-sneaker&psig=AOvVaw37shxg_oB5pYHdaonxM463&ust=1692302313100000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCJiZ08P74YADFQAAAAAdAAAAABAa'),
+    (3, 3, 'https://www.yankodesign.com/images/design_news/2022/01/this-parametric-3d-printed-sneaker-is-made-entirely-out-of-one-single-flexible-material/parametriks_print_001_1.jpg'),
     (3, 4, 'https://fusedfootwear.com/cdn/shop/products/FUSED-Oki-Translucent-D2_1024x.jpg?v=1620270472'),
     (3, 5, 'https://competition.adesignaward.com/award-winner-designer.php?profile=182659'),
 
@@ -694,12 +694,13 @@ VALUES
 \! echo "-------views--------"
 
 \! echo ""
-
+\! echo "view design_search"
 CREATE VIEW designs_search AS
 SELECT 
     designs.id AS design_id,
     designs.design_name AS design_name,
     designs.designer_id AS designer_id,
+    designs.design_weight AS weight,
     designers.designer_name AS designer_name,
     designs.design_price AS price,
     design_images.design_image_position AS loc,
@@ -709,6 +710,58 @@ SELECT
     INNER JOIN design_images ON designs.id = design_images.design_id
     INNER JOIN designers ON designs.designer_id = designers.id;
 
+\! echo "view design_search_images"
+CREATE VIEW design_search_images AS
+SELECT
+    designs_search.design_id,
+    design_images.design_image_position AS pos,
+    design_images.design_image_url AS image_url
+
+    FROM designs_search
+    INNER JOIN design_images ON designs_search.design_id = design_images.design_id;
+
+\! echo "view design_search_description"
+CREATE VIEW design_search_description AS
+SELECT
+    designs_search.design_id,
+    design_information.design_information_paragraph AS p,
+    design_information.design_information_text AS text
+
+    FROM designs_search
+    INNER JOIN design_information ON designs_search.design_id = design_information.design_id;
+
+\! echo "view designer_search"
+CREATE VIEW designer_search AS
+SELECT 
+    designers.id,
+    designers.designer_name,
+    designer_date.design_date,
+    designer_date.join_date
+
+    FROM designers
+    INNER JOIN designer_date ON designers.id = designer_date.designer_id ;
+
+\! echo "view designer_search_bio"
+CREATE VIEW designer_search_bio AS
+SELECT
+    designer_search.id,
+    designer_bio.designer_bio_paragraph AS p,
+    designer_bio.designer_bio_text AS text
+
+    FROM designer_search
+    INNER JOIN designer_bio ON designer_search.id = designer_bio.designer_id;
+
+\! echo "view designer_search_images"
+CREATE VIEW designer_search_images AS
+SELECT
+    designer_search.id,
+    designer_images.designer_image_position AS pos,
+    designer_images.designer_image_url AS image_url
+
+    FROM designer_search
+    INNER JOIN designer_images ON designer_search.id = designer_images.designer_id;
+
+\! echo "view shops_search"
 CREATE VIEW shops_search AS
 SELECT
     shops.id,
@@ -718,6 +771,7 @@ SELECT
     FROM shops
     INNER JOIN shop_location ON shops.id = shop_location.shop_id;
 
+\! echo "view shops_search_filaments"
 CREATE VIEW shops_search_filaments AS
 SELECT 
     shops_search.id,
@@ -727,6 +781,7 @@ SELECT
     FROM shops_search
     INNER JOIN shop_filaments ON shops_search.id = shop_filaments.shop_id;
 
+\! echo "view shops_search_images"
 CREATE VIEW shops_search_images AS
 SELECT
     shops_search.id,
@@ -757,4 +812,4 @@ SELECT
 
 ---------------- CONSOLE TEST ------------------
 
-SELECT * FROM shops_search_images WHERE pos = '1';
+-- SELECT * FROM designs_search;

@@ -8,11 +8,9 @@ router.get('/', (req, res) => {
 
 router.get('/search/item', controller.getDesigns);
 
-router.get('/search/item-id', (req, res) => {
-  res.render('101-browse-item-details');
-});
+router.get('/search/item/:id', controller.getDesign);
 
-router.get('/cart/id', (req, res) => {
+router.get('/cart/:id', (req, res) => {
   res.render('102-cart');
 });
 
@@ -22,8 +20,6 @@ router.get('/search/shop/id', (req, res) => {
 
 router.get('/search/shop', controller.getShops);
 
-router.get('/search/designer/id', (req, res) => {
-  res.render('105-desinger-profile');
-});
+router.get('/search/designer/:id', controller.getDesigner);
 
 module.exports = router;

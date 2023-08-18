@@ -22,28 +22,38 @@
 
       <div class="designer-profile">
         <div class="designer-profile-image-left">
-          <div class="designer-profile-image"></div>
-          <div class="designer-profile-image"></div>
+          <div class="designer-profile-image">
+            <img src="<%= images[0].image_url %>" alt="">
+          </div>
+          <div class="designer-profile-image">
+            <img src="<%= images[1].image_url %>" alt="">
+          </div>
         </div>
         <div class="designer-profile-image-left">
-          <div class="designer-profile-image"></div>
-          <div class="designer-profile-image"></div>
+          <div class="designer-profile-image">
+            <img src="<%= images[2].image_url %>" alt="">
+          </div>
+          <div class="designer-profile-image">
+            <img src="<%= images[3].image_url %>" alt="">
+          </div>
         </div>
         <div class="designer-profile-image-middle">
-          <div class="designer-profile-image-large"></div>
+          <div class="designer-profile-image-large">
+            <img src="<%= images[4].image_url %>" alt="">
+          </div>
         </div>
         <div class="designer-profile-information">
           <div class="designer-profile-name">
-            Hantaro2233
+            <%= designer[0].designer_name %>
           </div>
           <div class="designer-profile-dates">
-            Product designer since 2016, joined shapearoo in 2023
+            Product designer since <%= designer[0].design_date %>, joined shapearoo in <%= designer[0].join_date %>
           </div>
           <div class="designer-profile-links">
             LinkedIn, website, instagram
           </div>
           <div class="designer-profile-bio">
-            3D Printlife is committed to improving sustainability in 3D printing. We manufacture innovative biodegradable and eco-friendly 3d filaments in the USA, and we offer a curated collection of 3d printers, filaments, photopolymers, and accessories from some of the top manufacturers in the industry.
+            <%= bio[0].text %>
           </div>
           <div class="designer-profile-contact">
             <a href="#"> Contact Designer</a>
@@ -55,81 +65,33 @@
         <div class="designer-designs-header">
           Designs
         </div>
+
+        <% designs.forEach(info => { %>
+
         <div class="designer-items">
           <div class="designer-item">
-            <div class="designer-item-image"></div>
+            <div class="designer-item-image">
+              <img src="<%=  info.img_url %>" alt="">
+            </div>
             <div class="designer-item-label">
               <div class="designer-item-description">
                 <div class="designer-item-name">
-                  Eiffel Tower Keychain
+                  <%= info.design_name %>
                 </div>
                 <div class="designer-item-creator">
-                  by Hantaro2233
+                  by <%= info.designer_name %>
                 </div>
               </div>
               <button class="designer-item-btn-add default-button">+</button>
             </div>
           </div>
 
-          <div class="designer-item">
-            <div class="designer-item-image"></div>
-            <div class="designer-item-label">
-              <div class="designer-item-description">
-                <div class="designer-item-name">
-                  Eiffel Tower Keychain
-                </div>
-                <div class="designer-item-creator">
-                  by Hantaro2233
-                </div>
-              </div>
-              <button class="designer-item-btn-add default-button">+</button>
-            </div>
-          </div>
+          <% }) %>
 
-          <div class="designer-item">
-            <div class="designer-item-image"></div>
-            <div class="designer-item-label">
-              <div class="designer-item-description">
-                <div class="designer-item-name">
-                  Eiffel Tower Keychain
-                </div>
-                <div class="designer-item-creator">
-                  by Hantaro2233
-                </div>
-              </div>
-              <button class="designer-item-btn-add default-button">+</button>
-            </div>
-          </div>
 
-          <div class="designer-item">
-            <div class="designer-item-image"></div>
-            <div class="designer-item-label">
-              <div class="designer-item-description">
-                <div class="designer-item-name">
-                  Eiffel Tower Keychain
-                </div>
-                <div class="designer-item-creator">
-                  by Hantaro2233
-                </div>
-              </div>
-              <button class="designer-item-btn-add default-button">+</button>
-            </div>
-          </div>
 
-          <div class="designer-item">
-            <div class="designer-item-image"></div>
-            <div class="designer-item-label">
-              <div class="designer-item-description">
-                <div class="designer-item-name">
-                  Eiffel Tower Keychain
-                </div>
-                <div class="designer-item-creator">
-                  by Hantaro2233
-                </div>
-              </div>
-              <button class="designer-item-btn-add default-button">+</button>
-            </div>
-          </div>
+
+
         </div>
 
 

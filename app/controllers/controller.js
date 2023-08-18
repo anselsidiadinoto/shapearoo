@@ -52,7 +52,70 @@ const getShops = async function (req, res) {
   }
 };
 
+const getDesign = async function (req, res) {
+  const design_id = req.params.id;
+  try {
+    const query_1 = await pool.query(
+      `SELECT * FROM designs_search WHERE design_id=${design_id}`
+    );
+    const query_2 = await pool.query(
+      `SELECT * FROM design_search_images WHERE design_id=${design_id}`
+    );
+    const query_3 = await pool.query(
+      `SELECT * FROM design_search_description WHERE design_id=${design_id}`
+    );
+    const design_info = query_1.rows;
+    const design_images = query_2.rows;
+    const design_description = query_3.rows;
+
+    res.render('101-browse-item-details', {
+      design: design_info,
+      images: design_images,
+      description: design_description,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getDesigner = async function (req, res) {
+  const designer_id = req.params.id;
+  try {
+    const query_1 = await pool.query(
+      `SELECT * FROM designer_search WHERE id=${designer_id}`
+    );
+    const query_2 = await pool.query(
+      `SELECT * FROM designer_search_bio WHERE id=${designer_id}`
+    );
+    const query_3 = await pool.query(
+      `SELECT * FROM designer_search_images WHERE id=${designer_id} ORDER BY pos ASC`
+    );
+    const query_4 = await pool.query(
+      `SELECT * FROM designs_search WHERE designer_id=${designer_id}`
+    );
+
+    const designer_info = query_1.rows;
+    const designer_bio = query_2.rows;
+    const designer_images = query_3.rows;
+    const designer_designs = query_4.rows;
+
+    console.log(designer_designs);
+
+    console.log(designer_id);
+    res.render('105-desinger-profile', {
+      designer: designer_info,
+      bio: designer_bio,
+      images: designer_images,
+      designs: designer_designs,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getDesigns,
+  getDesign,
+  getDesigner,
   getShops,
 };
