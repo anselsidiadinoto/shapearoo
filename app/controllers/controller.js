@@ -16,7 +16,6 @@ const getDesigns = async function (req, res) {
 const getShops = async function (req, res) {
   try {
     const query = await pool.query('SELECT * FROM shops_search');
-
     let results = query.rows;
 
     for (i = 0; i < results.length; i++) {
@@ -41,8 +40,6 @@ const getShops = async function (req, res) {
       results[i].max_price = max_price;
       results[i].image_url = images.rows[0].url;
     }
-
-    console.log(results);
 
     res.render('104-browse-shop', {
       shop: results,
@@ -99,9 +96,6 @@ const getDesigner = async function (req, res) {
     const designer_images = query_3.rows;
     const designer_designs = query_4.rows;
 
-    console.log(designer_designs);
-
-    console.log(designer_id);
     res.render('105-desinger-profile', {
       designer: designer_info,
       bio: designer_bio,

@@ -791,6 +791,67 @@ SELECT
     FROM shops_search
     INNER JOIN shop_images ON shops_search.id = shop_images.shop_id;
 
+\! echo "view shop_search"
+CREATE VIEW shop_search AS
+SELECT
+    shops.id,
+    shops.shop_name,
+    shop_location.shop_address
+
+    FROM shops
+    INNER JOIN shop_location ON shops.id = shop_location.shop_id;
+
+\! echo "view shop_search_bio"
+CREATE VIEW shop_search_bio AS
+SELECT
+    shops.id,
+    shop_bio.shop_bio_paragraph AS p,
+    shop_bio.shop_bio_text AS text
+
+    FROM shops
+    INNER JOIN shop_bio ON shops.id = shop_bio.shop_id;
+
+\! echo "view shop_search_filaments"
+CREATE VIEW shop_search_filaments AS
+SELECT 
+    shops.id,
+    shop_filaments.shop_filament_type AS type,
+    shop_filaments.shop_filament_price AS price
+
+    FROM shops
+    INNER JOIN shop_filaments ON shops.id = shop_filaments.shop_id;
+
+\! echo "view shop_search_filament_colors"
+CREATE VIEW shop_search_filament_colors AS
+SELECT 
+    shops.id,
+    shop_filament_colors.shop_filament_type AS type,
+    shop_filament_colors.shop_filament_color AS color
+
+    FROM shops
+    INNER JOIN shop_filament_colors ON shops.id = shop_filament_colors.shop_id;
+
+\! echo "view shop_search_images"
+CREATE VIEW shop_search_images AS
+SELECT 
+    shops.id,
+    shop_images.shop_image_position AS pos,
+    shop_images.shop_image_url AS image_url
+
+    FROM shops
+    INNER JOIN shop_images ON shops.id = shop_images.shop_id;
+
+
+
+-- \! echo "view shop_search_filaments"
+-- CREATE VIEW shop_search_filament_color AS
+-- SELECT
+--     shops_search.id,
+--     shop_filaments.shop_filament_type AS type,
+--     shop_filaments.shop_filament_price AS price
+
+--     FROM shops_search
+--     INNER JOIN shop_filaments ON shops_search.id = shop_filaments.shop_id;
 
 
 
@@ -812,4 +873,4 @@ SELECT
 
 ---------------- CONSOLE TEST ------------------
 
--- SELECT * FROM designs_search;
+-- SELECT * FROM shop_search_filament_colors;

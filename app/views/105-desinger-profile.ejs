@@ -70,12 +70,12 @@
 
         <div class="designer-items">
           <div class="designer-item">
-            <div class="designer-item-image">
-              <img src="<%=  info.img_url %>" alt="">
+            <div class="designer-item-image ">
+              <img class="default-image-hover default-image-wrap" src="<%=  info.img_url %>" alt="" onclick="redirect('/search/item/<%= info.design_id %>')">
             </div>
             <div class="designer-item-label">
               <div class="designer-item-description">
-                <div class="designer-item-name">
+                <div class="designer-item-name default-link-hover" onclick="redirect('/search/item/<%= info.design_id %>')">
                   <%= info.design_name %>
                 </div>
                 <div class="designer-item-creator">

@@ -313,6 +313,21 @@ body {
     font-weight: 100;
 }
 
+.default-image-wrap {
+    object-fit: cover;
+    border-radius: 1rem;
+    transition: 0.3s;
+}
+
+.default-image-hover:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.default-link-hover:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 /* ------------------ 1001-BROWSE-HEADER-NAV-SEARCH -------------------- */
 
 .browse-header {
@@ -450,15 +465,6 @@ body {
     font-size: 1.2rem;
 }
 
-.browse-items-name:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.browse-items-creator:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
 
 .browse-items-btn-add {
     font-size: 2rem;
@@ -469,7 +475,6 @@ body {
     background-color: rgba(255, 255, 255, 0);
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
@@ -488,15 +493,9 @@ body {
 .browse-items-display img {
     width: 19.1rem;
     height: 20rem;
-    object-fit: cover;
-    border-radius: 1rem;
-    transition: 0.3s;
 }
 
-.browse-items-display img:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
+
 
 
 
@@ -575,6 +574,7 @@ body {
 
 .browse-item-details-creator {
     font-size: 1.5rem;
+    display: flex;
 }
 
 .browse-item-details-creator p:hover {
@@ -1014,6 +1014,23 @@ body {
     line-height: none;
 }
 
+.browse-shop-information-rating {
+    display: flex;
+    font-size: 1.2rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.browse-shop-information-rating div {
+    display: flex;
+    align-items: center;
+}
+
+.browse-shop-information-address {
+    font-size: 1.5rem;
+
+}
+
 .browse-shop-information-dates {
     font-size: 1.2rem;
 }
@@ -1334,9 +1351,8 @@ body {
 .designer-item-image img {
     width: 18rem;
     height: 18rem;
-    object-fit: cover;
-    border-radius: 1rem;
 }
+
 
 
 .designer-item-label {
@@ -1350,6 +1366,7 @@ body {
 .designer-item-name {
     font-size: 1.2rem;
 }
+
 
 .designer-item-btn-add {
     font-size: 2rem;

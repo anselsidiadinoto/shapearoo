@@ -42,38 +42,35 @@
           <div class="browse-item-details-name">
             <%= design[0].design_name %>
           </div>
-          <div class="browse-item-details-creator">
-            <p onclick="redirect('/search/designer/<%= design[0].designer_id %>')">
-              By <%= design[0].designer_name %>
-            </p>
-            <div class="browse-item-details-rating">
-              <div class="browse-item-details-rating-star">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star-half-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-              </div>
-              <div class="browse-item-details-rating-info">
-                (24) Ratings, (99) Purchases
-              </div>
-            </div>
-            <div class="browse-item-details-price">
-              $<%= design[0].price %>
-            </div>
-            <div class="browse-item-details-description">
-              <%= description[0].text %>
-            </div>
-            <div class="browse-item-details-specs">
-              <div>+- <%= design[0].weight %> grams</div>
-              <div>Recommended print specs: </div>
-              <div>PLS/PLA, 23mm/s, 2mm nozzle</div>
-              <div>Estimated print time: 30min</div>
-              <div>Estimated print price: $10.00</div>
-            </div>
-            <button class="browse-item-details-btn default-button">add to cart</button>
-
+          <div class="browse-item-details-creator default-link-hover" onclick="redirect('/search/designer/<%= design[0].designer_id %>')">
+            By <%= design[0].designer_name %>
           </div>
+          <div class="browse-item-details-rating">
+            <div class="browse-item-details-rating-star">
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star-half-outline"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
+            </div>
+            <div class="browse-item-details-rating-info">
+              (24) Ratings, (99) Purchases
+            </div>
+          </div>
+          <div class="browse-item-details-price">
+            $<%= design[0].price %>
+          </div>
+          <div class="browse-item-details-description">
+            <%= description[0].text %>
+          </div>
+          <div class="browse-item-details-specs">
+            <div>+- <%= design[0].weight %> grams</div>
+            <div>Recommended print specs: </div>
+            <div>PLS/PLA, 23mm/s, 2mm nozzle</div>
+            <div>Estimated print time: 30min</div>
+            <div>Estimated print price: $10.00</div>
+          </div>
+          <button class="browse-item-details-btn default-button">add to cart</button>
 
         </div>
 
