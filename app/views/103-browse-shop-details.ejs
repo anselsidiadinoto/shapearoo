@@ -23,18 +23,28 @@
       <div class="browse-shop">
         <div class="browse-shop-images">
           <div class="browse-shop-image-top">
-            <div class="browse-shop-image"></div>
-            <div class="browse-shop-image"></div>
+            <div class="browse-shop-image">
+              <img class="default-image-wrap" src="<%= images[0].image_url %>" alt="">
+            </div>
+            <div class="browse-shop-image">
+              <img class="default-image-wrap" src="<%= images[1].image_url %>" alt="">
+            </div>
           </div>
           <div class="browse-shop-image-bottom">
-            <div class="browse-shop-image"></div>
-            <div class="browse-shop-image"></div>
+            <div class="browse-shop-image">
+              <img class="default-image-wrap" src="<%= images[2].image_url %>" alt="">
+            </div>
+            <div class="browse-shop-image">
+              <img class="default-image-wrap" src="<%= images[3].image_url %>" alt="">
+            </div>
           </div>
-          <div class="browse-shop-image-large"></div>
+          <div class="browse-shop-image-large">
+            <img class="default-image-wrap" src="<%= images[4].image_url %>" alt="">
+          </div>
         </div>
         <div class="browse-shop-information">
           <div class="browse-shop-information-name">
-            Printaroo
+            <%= shop[0].shop_name %>
           </div>
           <div class="browse-shop-information-rating">
             <div class="browse-shop-information-rating-star">
@@ -49,10 +59,10 @@
             </div>
           </div>
           <div class="browse-shop-information-address">
-            MANHATTAN NEW YORK
+            <%= shop[0].shop_address %>
           </div>
           <div class="browse-shop-information-dates">
-            3d printing since 2010, joined shapearoo in 2023
+            3d printing since <%= shop[0].print_date %>, joined shapearoo in <%= shop[0].join_date %>
           </div>
           <div class="browse-shop-information-links">
             LinkedIn, website, instagram
@@ -60,21 +70,15 @@
           <button class="browse-shop-information-btn-select default-button">
             Select Shop
           </button>
+          <% bio.forEach(info => { %>
           <p class="browse-shop-information-p">
-            3D Printlife is committed to improving sustainability in 3D printing. We manufacture innovative biodegradable and eco-friendly 3d filaments in the USA, and we offer a curated collection of 3d printers, filaments, photopolymers, and accessories from some of the top manufacturers in the industry.
+            <%= info.text %>
           </p>
-          <p class="browse-shop-information-p">
-            We are also the creators of Life Support, a global networking & tech support site for all things 3d printing, and we offer online, self paced 3d printing training and badge certifications from the New Collar Network.
-          </p>
-          <p class="browse-shop-information-p">
-            3D Printlife is committed to improving sustainability in 3D printing. We manufacture innovative biodegradable and eco-friendly 3d filaments in the USA,
-          </p>
-
+          <% }) %>
           <div class="browse-shop-information-contact">
             <a href="#">Contact Shop</a>
           </div>
         </div>
-
         <div class="browse-shop-details">
           <div class="browse-shop-details-header">
             Shop Details
@@ -83,113 +87,34 @@
             Available printers:
           </div>
           <div class="browse-shop-details-printers">
-            <div>Prusa MK3</div>
-            <div>Shapeoko</div>
-            <div>makerlab</div>
-            <div>formlabs</div>
+            <% printers.forEach(info => { %>
+            <div><%= info.shop_printer %></div>
+            <% }) %>
           </div>
           <div class="browse-shop-details-text">
             Print options:
           </div>
+          <% for(i = 0; i<filaments.length ; i++) { %>
           <div class="browse-shop-details-text">
-            PLA
+            <%= filaments[i].type %>
           </div>
           <div class="browse-shop-details-filament">
-
-            <div class="browse-shop-details-filament-box">
-              <div class="browse-shop-details-filament-color">
-                <div>Pink</div>
-                <div>Yellow</div>
-                <div>Green</div>
-                <div>Blue</div>
-                <div>Purple</div>
-                <div>Violet</div>
-                <div>Magenta</div>
-              </div>
-              <div class="browse-shop-details-filament-price">
-                $0.15/gr
-              </div>
-            </div>
-
-
             <div class="browse-shop-details-filament">
               <div class="browse-shop-details-filament-box">
                 <div class="browse-shop-details-filament-color">
-                  <div>Black</div>
-                  <div>White</div>
+                  <% for(j = 0; j<filaments[i].colors.length ; j++) { %>
+                  <div><%= filaments[i].colors[j] %></div>
+                  <% } %>
                 </div>
                 <div class="browse-shop-details-filament-price">
-                  $0.20/gr
+                  $<%= filaments[i].price %>/gr
                 </div>
               </div>
             </div>
-
           </div>
-
-          <div class="browse-shop-details-text">
-            PLS
-          </div>
-          <div class="browse-shop-details-filament">
-
-            <div class="browse-shop-details-filament-box">
-              <div class="browse-shop-details-filament-color">
-                <div>Pink</div>
-                <div>Yellow</div>
-                <div>Green</div>
-                <div>Blue</div>
-                <div>Purple</div>
-                <div>Violet</div>
-                <div>Magenta</div>
-              </div>
-              <div class="browse-shop-details-filament-price">
-                $0.15/gr
-              </div>
-            </div>
-
-            <div class="browse-shop-details-filament-box">
-              <div class="browse-shop-details-filament-color">
-                <div>Black</div>
-                <div>White</div>
-              </div>
-              <div class="browse-shop-details-filament-price">
-                $0.20/gr
-              </div>
-            </div>
-
-          </div>
-
-          <div class="browse-shop-details-text">
-            Resin
-          </div>
-          <div class="browse-shop-details-filament">
-
-            <div class="browse-shop-details-filament-box">
-              <div class="browse-shop-details-filament-color">
-                <div>Pink</div>
-                <div>Yellow</div>
-                <div>Green</div>
-                <div>Blue</div>
-              </div>
-              <div class="browse-shop-details-filament-price">
-                $0.35/gr
-              </div>
-            </div>
-
-            <div class="browse-shop-details-filament-box">
-              <div class="browse-shop-details-filament-color">
-                <div>Black</div>
-                <div>White</div>
-              </div>
-              <div class="browse-shop-details-filament-price">
-                $0.40/gr
-              </div>
-            </div>
-
-          </div>
-
+          <% } %>
         </div>
       </div>
-
 
       <div class="browse-shop-past">
         <div class="browse-shop-past-header">

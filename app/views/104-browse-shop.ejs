@@ -21,14 +21,12 @@
     <div class="browse-shops">
 
       <% for(i = 0; i < shop.length; i++) { %>
-
-
       <div class="browse-shops-item">
-        <div class="browse-shops-item-image">
-          <img src="<%= shop[i].image_url %>" alt="">
+        <div class="browse-shops-item-image" onclick="redirect('/search/shop/<%= shop[i].id %>')">
+          <img class="default-image-wrap default-image-hover" src="<%= shop[i].image_url %>" alt="">
         </div>
         <div class="browse-shops-item-information">
-          <div class="browse-shops-item-name">
+          <div class="browse-shops-item-name default-link-hover" onclick="redirect('/search/shop/<%= shop[i].id %>')">
             <%= shop[i].shop_name %>
           </div>
           <div class="browse-shops-item-rating">
@@ -64,7 +62,7 @@
 
           <div class="browse-shops-item-buttons">
             <button class="browse-shops-item-btn default-button">Select Shop</button>
-            <button class="browse-shops-item-btn default-button">Profile</button>
+            <button class="browse-shops-item-btn default-button" onclick="redirect('/search/shop/<%= shop[i].id %>')">Profile</button>
 
           </div>
 

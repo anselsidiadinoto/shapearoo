@@ -10,16 +10,14 @@ router.get('/search/item', controller.getDesigns);
 
 router.get('/search/item/:id', controller.getDesign);
 
-router.get('/cart/:id', (req, res) => {
-  res.render('102-cart');
-});
+router.get('/cart', controller.getCart);
 
-router.get('/search/shop/id', (req, res) => {
-  res.render('103-browse-shop-details');
-});
+router.get('/search/shop/:id', controller.getShop);
 
 router.get('/search/shop', controller.getShops);
 
 router.get('/search/designer/:id', controller.getDesigner);
+
+router.get('/add/item/:id', controller.addItem);
 
 module.exports = router;

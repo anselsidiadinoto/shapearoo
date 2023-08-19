@@ -306,7 +306,6 @@ VALUES
 
     (4, 2, 'we proudly offer FDM plastic 3D printing services to clients looking for rapid prototyping and production-grade parts. With over 100 FDM 3D printers in our Newark, New Jersey, warehouse, we can produce thousands of parts with unparalleled speed and accuracy. Our custom FDM 3D printing process is perfect for creating product prototypes, models, and end-use parts for various applications, including architectural modeling, experiential marketing, consumer products, and more. Our team of expert designers works closely with clients to understand their specific needs and optimize our FDM printing process to meet their goals.'),
 
-    (4, 3, 'Fused Deposition Modelling (“FDM”) or Fused Filament Fabrication (FFF), the most common 3D printing process, is a material extrusion type additive manufacturing process. S.Scott Crump, the Stratasys founder, first developed and patented the FDM 3D printing process in 1988. And when the patent expired in 2009, it paved the way for commercial FDM printers.'),
 
     (5, 3, 'Our clients range from first-timers to professional designers. Our approach allows anyone to engage with the product design process. We start by reviewing your artwork or napkin sketches, then we take you through a fun and collaborative design experience. '),
 
@@ -655,39 +654,90 @@ VALUES
 \! echo ""
 
 
-\! echo "table cart"
-DROP TABLE IF EXISTS cart;
-CREATE TABLE cart(
+\! echo "table users"
+DROP TABLE IF EXISTS users CASCADE;
+CREATE TABLE users (
     id SERIAL,
-    cart_user TEXT
+    user_first_name TEXT,
+    user_last_name TEXT,
+    user_email TEXT,
+
+    CONSTRAINT pk_users_id PRIMARY KEY(id),
+    CONSTRAINT uc_users_id UNIQUE(id)
 );
 
-\! echo "table cart_subtotal_design"
-DROP TABLE IF EXISTS cart_subtotal_design;
-CREATE TABLE cart_subtotal_design(
-    cart_id INT,
+\! echo "table user_cart_design"
+DROP TABLE IF EXISTS user_cart_design;
+CREATE TABLE user_cart_design (
+    user_id INT,
     design_id INT,
     design_quantity INT
 );
 
-\! echo "table cart_subtotal_shop"
-DROP TABLE IF EXISTS cart_subtotal_shop;
-CREATE TABLE cart_subtotal_shop(
-    cart_id INT,
+\! echo "table user_cart_shop"
+DROP TABLE IF EXISTS user_cart_shop;
+CREATE TABLE user_cart_shop (
+    user_id INT,
+    shop_id INT,
     design_id INT,
-    print_quantity INT,
-    print_filament TEXT,
-    print_color TEXT
+    design_quantity INT,
+    design_material TEXT
 );
 
-\! echo ""
+\! echo""
 
-\! echo "insert cart"
-INSERT INTO cart(cart_user)
+\! echo "foreign keys user_cart_design"
+ALTER TABLE user_cart_design ADD CONSTRAINT fk_user_cart_design_user_id
+    FOREIGN KEY(user_id)
+    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_design ADD CONSTRAINT fk_user_cart_design_design_id
+    FOREIGN KEY(design_id)
+    REFERENCES designs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_design ADD CONSTRAINT fk_user_cart_design_designer_id
+    FOREIGN KEY(designer_id)
+    REFERENCES designers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+\! echo "foreign keys user_cart_shop"
+ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_user_id
+    FOREIGN KEY(user_id)
+    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_design_id
+    FOREIGN KEY(design_id)
+    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+\! echo""
+\! echo "insert users"
+INSERT INTO users(user_first_name, user_last_name, user_email) 
 VALUES
-    ('default_cart');
+    ('Mads', 'Mikkelsen', 'madsmikkelsen@email.com');
+
+
+
+-- DROP TABLE IF EXISTS user_cart;
+-- CREATE TABLE user_cart (
+--     id SERIAL,
+--     user_id INT,
+--     cart_total DECIMAL
+-- )
+
+
 
 \! echo ""
+
+-- \! echo "insert cart"
+-- INSERT INTO cart(cart_user)
+-- VALUES
+--     ('default_cart');
+
+-- \! echo ""
+
+
+\! echo ""
+
 
 
 
@@ -796,10 +846,14 @@ CREATE VIEW shop_search AS
 SELECT
     shops.id,
     shops.shop_name,
-    shop_location.shop_address
+    shop_location.shop_address,
+    shop_date.print_date,
+    shop_date.join_date
 
     FROM shops
-    INNER JOIN shop_location ON shops.id = shop_location.shop_id;
+    INNER JOIN shop_location ON shops.id = shop_location.shop_id
+    INNER JOIN shop_date ON shops.id = shop_date.shop_id;
+
 
 \! echo "view shop_search_bio"
 CREATE VIEW shop_search_bio AS
@@ -810,6 +864,15 @@ SELECT
 
     FROM shops
     INNER JOIN shop_bio ON shops.id = shop_bio.shop_id;
+
+\! echo "view shop_search_printer"
+CREATE VIEW shop_search_printer AS 
+SELECT 
+    shops.id,
+    shop_printers.shop_printer
+
+    FROM shops
+    INNER JOIN shop_printers ON shops.id = shop_printers.shop_id;
 
 \! echo "view shop_search_filaments"
 CREATE VIEW shop_search_filaments AS
@@ -841,33 +904,53 @@ SELECT
     FROM shops
     INNER JOIN shop_images ON shops.id = shop_images.shop_id;
 
+\! echo "view cart_view"
+CREATE VIEW cart_view AS
+SELECT
+    users.id,
+    users.user_first_name AS first_name,
+    users.user_last_name AS last_name,
+    users.user_email AS email
 
+    FROM users;
 
--- \! echo "view shop_search_filaments"
--- CREATE VIEW shop_search_filament_color AS
+\! echo "view user_cart_design_info"
+CREATE VIEW user_cart_design_info AS
+SELECT
+    user_cart_design.user_id,
+    user_cart_design.design_id,
+    designs.designer_id,
+    user_cart_design.design_quantity
+
+    FROM designs
+    INNER JOIN user_cart_design ON designs.id = user_cart_design.design_id;
+
+\! echo "view cart_view_items"
+CREATE VIEW cart_view_items AS
+SELECT
+    designs.id,
+    designs.design_name AS design_name,
+    designs.designer_id AS designer_id,
+    designs.design_weight AS weight,
+    designers.designer_name AS designer_name,
+    designs.design_price AS price,
+    design_images.design_image_position AS loc,
+    design_images.design_image_url AS img_url,
+    user_cart_design_info.design_quantity AS qtd,
+    designs.design_price * user_cart_design_info.design_quantity AS subtotal
+
+    FROM designs 
+    INNER JOIN design_images ON designs.id = design_images.design_id
+    INNER JOIN designers ON designs.designer_id = designers.id
+    INNER JOIN user_cart_design_info ON designs.id = user_cart_design_info.design_id;
+
+-- \! echo "view cart_view_item_designer"
+-- CREATE VIEW cart_view_item_designer AS
 -- SELECT
---     shops_search.id,
---     shop_filaments.shop_filament_type AS type,
---     shop_filaments.shop_filament_price AS price
+--     designers.id,
+--     designers.designer_name AS dsr_name
 
---     FROM shops_search
---     INNER JOIN shop_filaments ON shops_search.id = shop_filaments.shop_id;
-
-
-
--- \! echo "view design_subtotal"
--- CREATE VIEW design_subtotal AS
--- SELECT
---     cart_subtotal_design.cart_id AS id_c,
---     cart_subtotal_design.design_id AS id_d,
---     designs.design_price AS price,
---     cart_subtotal_design.design_quantity AS qtd,
---     price * qtd AS subtotal
-
--- FROM designs JOIN cart_subtotal_design
--- ON designs.id = design_subtotal.design_id ;
-
-
+--     FROM designers;
 -- \! echo "___________________________________________________________________________"
 
 

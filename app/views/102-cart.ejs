@@ -14,7 +14,7 @@
 
     <div class="nav-back-container">
       <ion-icon class="medium-icon" name="chevron-back-outline"></ion-icon>
-      <div class="nav-link"> back to search </div>
+      <div class="nav-link default-link-hover" onclick="redirect('/search/item')"> back to search </div>
     </div>
 
     <div class="container-inner">
@@ -103,22 +103,30 @@
 
             <!-- CART ORDER ITEM SINGLE -->
 
+            <% for(i = 0; i < designs.length; i++) { %>
+
+
             <div class="cart-order-details-item">
               <div class="cart-order-details-item-qtd">
-                3
+                <%= designs[i].qtd %>
               </div>
               <div class="cart-order-details-item-info">
                 <div class="cart-order-details-item-image">
+                  <img class="default-image-wrap" src="<%= designs[i].img_url %>" alt="">
                 </div>
                 <div class="cart-order-details-item-text">
-                  <div>Eifell Tower Keychain</div>
-                  <div>by Hantaro2233</div>
-                  <div>$1.50</div>
+                  <div><%= designs[i].design_name %></div>
+                  <div>by <%= designs[i].designer_name %></div>
+                  <div>$<%= designs[i].price %></div>
+
+                  <div><a href="#">edit design details</a></div>
+
                 </div>
+
 
               </div>
               <div class="cart-order-details-item-subtotal">
-                $4.50
+                $<%= designs[i].subtotal %>
               </div>
               <div class="cart-order-details-print-info">
 
@@ -159,49 +167,8 @@
               </div>
             </div>
 
+            <% } %>
 
-            <!-- CART ORDER ITEM SINGLE -->
-
-            <div class="cart-order-details-item">
-              <div class="cart-order-details-item-qtd">
-                4
-              </div>
-              <div class="cart-order-details-item-info">
-                <div class="cart-order-details-item-image">
-                </div>
-                <div class="cart-order-details-item-text">
-                  <div>Yoda desk decor</div>
-                  <div>by Laufeylaufey</div>
-                  <div>$2.00</div>
-                </div>
-
-              </div>
-              <div class="cart-order-details-item-subtotal">
-                $8
-              </div>
-              <div class="cart-order-details-print-info">
-
-                <div class="cart-order-details-print-item">
-                  <div class="cart-order-details-print-item-qtd">
-                    (4)
-                  </div>
-                  <div class="cart-order-details-print-item-text">
-                    <div>PLA, Blue ($0.15/gr)</div>
-                    <div>est. weight : 20 gr (ea. $3)</div>
-                    <div>$12</div>
-                  </div>
-                </div>
-                <a href="#">edit print details</a>
-              </div>
-
-              <div class="cart-order-details-print-subtotal">
-                $12
-              </div>
-
-              <div class="cart-order-details-print-total">
-                $20
-              </div>
-            </div>
 
           </div>
 

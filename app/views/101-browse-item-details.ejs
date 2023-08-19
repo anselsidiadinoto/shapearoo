@@ -15,7 +15,7 @@
 
     <div class="nav-back-container">
       <ion-icon class="medium-icon" name="chevron-back-outline"></ion-icon>
-      <div class="nav-link"> back to search </div>
+      <div class="nav-link default-link-hover" onclick="redirect('/search/item')"> back to search </div>
     </div>
 
     <div class="browse-item-details-container">
@@ -70,7 +70,7 @@
             <div>Estimated print time: 30min</div>
             <div>Estimated print price: $10.00</div>
           </div>
-          <button class="browse-item-details-btn default-button">add to cart</button>
+          <button class="browse-item-details-btn default-button" onclick="redirect('/add/item/<%= design[0].design_id %>')">add to cart</button>
 
         </div>
 
