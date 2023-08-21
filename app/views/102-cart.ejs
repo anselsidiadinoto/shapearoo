@@ -3,6 +3,8 @@
 
 <head>
   <%- include('partials/0001-head-default') %>
+  <script src="/js/102-cart_shopDisplay.js" defer></script>
+
   <title>Shapearoo - Cart</title>
 </head>
 
@@ -24,20 +26,22 @@
       <div class="cart-order-container">
         <div class="cart-order-details">
           <div class="cart-order-details-info">
-            <div class="cart-order-details-shop-img">
+            <div id="shop_id_<%= shop[0].shop_id %>" class="cart-order-details-shop-img" onclick="redirect('/search/shop')">
+              <img class="cart-order-details-shop-image default-image-wrap" src="<%= shop[0].img_url %>" onclick="redirect('/search/shop/<%= shop[0].shop_id %>')" alt="">
+              <div class="cart-order-details-shop-add-btn">+</div>
+              <div class="cart-order-details-shop-add-text">select shop</div>
             </div>
             <div class="cart-order-details-shop-info">
               <div class="cart-order-details-shop-name">
-                Printaroo
+                <%= shop[0].shop_name %>
               </div>
               <div class="cart-order-details-shop-address">
                 <div>Shop address: </div>
-                <div>303 W 39th Street</div>
-                <div>New York, NY, 10018</div>
+                <div><%= shop[0].shop_address %></div>
               </div>
 
-              <a class="cart-order-details-shop-change" href="#"> change print shop</a>
-              <a class="cart-order-details-shop-contact" href="#"> contact shop</a>
+              <a class="cart-order-details-shop-change" href="#"> select print shop</a>
+              <!-- <a class="cart-order-details-shop-contact" href="#"> contact shop</a> -->
 
 
             </div>

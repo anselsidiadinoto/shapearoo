@@ -15,7 +15,7 @@
 
     <div class="nav-back-container">
       <ion-icon class="medium-icon" name="chevron-back-outline"></ion-icon>
-      <div class="nav-link"> back to search </div>
+      <div class="nav-link default-link-hover" onclick="redirect('/search/shop')"> back to shops </div>
     </div>
 
     <div class="container-inner">
@@ -67,7 +67,7 @@
           <div class="browse-shop-information-links">
             LinkedIn, website, instagram
           </div>
-          <button class="browse-shop-information-btn-select default-button">
+          <button class="browse-shop-information-btn-select default-button" onclick="redirect(`/add/shop/${<%= shop[0].id %>}`)">
             Select Shop
           </button>
           <% bio.forEach(info => { %>

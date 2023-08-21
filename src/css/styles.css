@@ -647,12 +647,46 @@ body {
 .cart-order-details-shop-img {
     width: 14rem;
     height: 14rem;
-    background-color: rgb(223, 223, 223);
+    background-color: rgb(231, 231, 231);
     border-radius: 0.5rem;
+    transition: 0.3s;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
 
     /* width: 15rem;
     height: 15rem;
     background-color: rgb(243, 148, 33); */
+}
+
+.cart-order-details-shop-img:hover {
+    background-color: var(--clr-btn-active);
+    color: white;
+
+}
+
+.cart-order-details-shop-img img {
+    width: 14rem;
+    height: 14rem;
+}
+
+
+
+.cart-order-details-shop-add-btn {
+    display: flex;
+    font-size: 5rem;
+    font-weight: 100;
+    justify-content: center;
+
+    height: 6rem;
+}
+
+.cart-order-details-shop-add-text {
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
 }
 
 .cart-order-details-shop-info {

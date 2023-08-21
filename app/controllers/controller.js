@@ -172,6 +172,19 @@ const getShop = async function (req, res) {
   }
 };
 
+const addShop = async function (req, res) {
+  const shop_id = req.params.id;
+  try {
+    await pool.query(
+      `UPDATE user_cart_shop_selection SET shop_id=${shop_id} WHERE user_id=1`
+    );
+
+    res.redirect('/cart');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const addItem = async function (req, res) {
   const design_id = req.params.id;
   try {
@@ -197,12 +210,27 @@ const getCart = async function (req, res) {
   try {
     const query_1 = await pool.query(`SELECT * FROM cart_view`);
     const query_2 = await pool.query(`SELECT * FROM cart_view_items`);
-    // const query_1 = await pool.query(`SELECT * FROM cart_view`);
+    const query_3 = await pool.query(
+      `SELECT * FROM cart_view_shop_selection WHERE user_id=1 AND img_pos='2'`
+    );
 
     const designs_info = query_2.rows;
+    let shop_selection = query_3.rows;
 
-    console.log(query_2.rows);
+    if (shop_selection[0] == undefined) {
+      shop_selection = [
+        {
+          shop_id: 'unassigned',
+          img_url: '#',
+          shop_name: 'unassigned',
+          shop_address: 'unassigned',
+        },
+      ];
+    }
+
+    console.log(shop_selection);
     res.render('102-cart', {
+      shop: shop_selection,
       designs: designs_info,
     });
   } catch (error) {
@@ -216,6 +244,7 @@ module.exports = {
   getDesigner,
   getShops,
   getShop,
+  addShop,
   addItem,
   getCart,
 };

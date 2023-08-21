@@ -16,6 +16,8 @@ router.get('/search/shop/:id', controller.getShop);
 
 router.get('/search/shop', controller.getShops);
 
+router.get('/add/shop/:id', controller.addShop);
+
 router.get('/search/designer/:id', controller.getDesigner);
 
 router.get('/add/item/:id', controller.addItem);

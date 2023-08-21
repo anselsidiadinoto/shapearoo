@@ -100,6 +100,10 @@ ALTER TABLE shop_bio ADD CONSTRAINT fk_shop_bio_shop_id
 
 \! echo ""
 ----------------- SHOP VALUES -----------------
+\! echo "insert unassigned shop"
+INSERT INTO shops(id, shop_name) 
+VALUES
+    (-1, 'unassigned');
 
 \! echo "insert shops"
 INSERT INTO shops(shop_name)
@@ -110,6 +114,8 @@ VALUES
     ('The Workshop at 87th'),
     ('Prints by the Pier'),
     ('3-D Collective');
+
+
 
 \! echo "insert shop_location"
 INSERT INTO shop_location(shop_id, shop_address)
@@ -674,6 +680,14 @@ CREATE TABLE user_cart_design (
     design_quantity INT
 );
 
+\! echo "table user_cart_shop_selection"
+DROP TABLE IF EXISTS user_cart_shop_selection;
+CREATE TABLE user_cart_shop_selection (
+    user_id INT,
+    shop_id INT
+);
+
+
 \! echo "table user_cart_shop"
 DROP TABLE IF EXISTS user_cart_shop;
 CREATE TABLE user_cart_shop (
@@ -681,7 +695,8 @@ CREATE TABLE user_cart_shop (
     shop_id INT,
     design_id INT,
     design_quantity INT,
-    design_material TEXT
+    design_filament TEXT,
+    design_color TEXT
 );
 
 \! echo""
@@ -693,9 +708,14 @@ ALTER TABLE user_cart_design ADD CONSTRAINT fk_user_cart_design_user_id
 ALTER TABLE user_cart_design ADD CONSTRAINT fk_user_cart_design_design_id
     FOREIGN KEY(design_id)
     REFERENCES designs(id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE user_cart_design ADD CONSTRAINT fk_user_cart_design_designer_id
-    FOREIGN KEY(designer_id)
-    REFERENCES designers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+\! echo "foreign keys user_cart_shop_selection"
+ALTER TABLE user_cart_shop_selection ADD CONSTRAINT fk_user_cart_shop_selection_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES shops(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_shop_selection ADD CONSTRAINT fk_user_cart_shop_selection_user_id
+    FOREIGN KEY(user_id)
+    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 \! echo "foreign keys user_cart_shop"
@@ -704,17 +724,20 @@ ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_user_id
     REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_design_id
     FOREIGN KEY(design_id)
-    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    REFERENCES designs(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_shop_id
     FOREIGN KEY(shop_id)
-    REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    REFERENCES shops(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 \! echo""
 \! echo "insert users"
 INSERT INTO users(user_first_name, user_last_name, user_email) 
 VALUES
     ('Mads', 'Mikkelsen', 'madsmikkelsen@email.com');
-
+\! echo "insert users_cart_shop_selection"
+INSERT INTO user_cart_shop_selection(user_id, shop_id)
+VALUES
+    (1, -1);
 
 
 -- DROP TABLE IF EXISTS user_cart;
@@ -944,13 +967,24 @@ SELECT
     INNER JOIN designers ON designs.designer_id = designers.id
     INNER JOIN user_cart_design_info ON designs.id = user_cart_design_info.design_id;
 
--- \! echo "view cart_view_item_designer"
--- CREATE VIEW cart_view_item_designer AS
--- SELECT
---     designers.id,
---     designers.designer_name AS dsr_name
+\! echo "view cart_view_shop_selection"
+CREATE VIEW cart_view_shop_selection AS
+SELECT
+    users.id AS user_id,
+    user_cart_shop_selection.shop_id,
+    shops.shop_name,
+    shop_location.shop_address,
+    shop_images.shop_image_position AS img_pos,
+    shop_images.shop_image_url AS img_url
 
---     FROM designers;
+    FROM users
+    INNER JOIN user_cart_shop_selection ON users.id = user_cart_shop_selection.user_id
+    INNER JOIN shops ON user_cart_shop_selection.shop_id = shops.id
+    INNER JOIN shop_location ON shops.id = shop_location.shop_id
+    INNER JOIN shop_images ON shops.id = shop_images.shop_id;
+
+
+
 -- \! echo "___________________________________________________________________________"
 
 
