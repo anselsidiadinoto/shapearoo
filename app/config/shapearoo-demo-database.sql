@@ -675,6 +675,7 @@ CREATE TABLE users (
 \! echo "table user_cart_design"
 DROP TABLE IF EXISTS user_cart_design;
 CREATE TABLE user_cart_design (
+    id SERIAL,
     user_id INT,
     design_id INT,
     design_quantity INT
@@ -683,6 +684,7 @@ CREATE TABLE user_cart_design (
 \! echo "table user_cart_shop_selection"
 DROP TABLE IF EXISTS user_cart_shop_selection;
 CREATE TABLE user_cart_shop_selection (
+    id SERIAL,
     user_id INT,
     shop_id INT
 );
@@ -943,7 +945,8 @@ SELECT
     user_cart_design.user_id,
     user_cart_design.design_id,
     designs.designer_id,
-    user_cart_design.design_quantity
+    user_cart_design.design_quantity,
+    user_cart_design.id AS cart_item_order
 
     FROM designs
     INNER JOIN user_cart_design ON designs.id = user_cart_design.design_id;
@@ -952,6 +955,7 @@ SELECT
 CREATE VIEW cart_view_items AS
 SELECT
     designs.id,
+    user_cart_design_info.cart_item_order,
     designs.design_name AS design_name,
     designs.designer_id AS designer_id,
     designs.design_weight AS weight,

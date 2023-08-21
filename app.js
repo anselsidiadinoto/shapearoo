@@ -1,6 +1,12 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+app.use(
+    express.urlencoded({
+        extended: true,
+    })
+);
+app.use(express.json());
 
 // Static Files
 app.use('/css', express.static(__dirname + '/src/css'));
@@ -15,7 +21,7 @@ const router = require('./app/routes/routes');
 app.use('/', router);
 
 app.listen(3000, function () {
-  console.log('server is up baby');
+    console.log('server is up baby');
 });
 
 // ------------ TEMPLATES FOR OTHER STATIC FILES -----------------

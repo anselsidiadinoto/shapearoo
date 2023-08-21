@@ -4,7 +4,7 @@
 <head>
   <%- include('partials/0001-head-default') %>
   <script src="/js/102-cart_shopDisplay.js" defer></script>
-
+  <script src="/js/102-cart_modals.js" defer></script>
   <title>Shapearoo - Cart</title>
 </head>
 
@@ -40,7 +40,7 @@
                 <div><%= shop[0].shop_address %></div>
               </div>
 
-              <a class="cart-order-details-shop-change" href="#"> select print shop</a>
+              <a class="cart-order-details-shop-change" href="#" onclick="modalShopSelection()"> select print shop</a>
               <!-- <a class="cart-order-details-shop-contact" href="#"> contact shop</a> -->
 
 
@@ -111,20 +111,22 @@
 
 
             <div class="cart-order-details-item">
-              <div class="cart-order-details-item-qtd">
+              <div id="item_quantity_id_<%= designs[i].id %>" class="cart-order-details-item-qtd">
                 <%= designs[i].qtd %>
               </div>
               <div class="cart-order-details-item-info">
                 <div class="cart-order-details-item-image">
-                  <img class="default-image-wrap" src="<%= designs[i].img_url %>" alt="">
+                  <img id="item_img_id_<%= designs[i].id %>" class="default-image-wrap" src="<%= designs[i].img_url %>" alt="">
                 </div>
                 <div class="cart-order-details-item-text">
-                  <div><%= designs[i].design_name %></div>
-                  <div>by <%= designs[i].designer_name %></div>
-                  <div>$<%= designs[i].price %></div>
-
-                  <div><a href="#">edit design details</a></div>
-
+                  <div id="item_design_name_id_<%= designs[i].id %>"><%= designs[i].design_name %></div>
+                  <div id="item_designer_name_id_<%= designs[i].id %>">by <%= designs[i].designer_name %></div>
+                  <div>
+                    $<%= designs[i].price %>
+                  </div>
+                  <div>
+                    <a href="#" onclick="modalItemQuantity(<%= designs[i].id %>)">edit design details</a>
+                  </div>
                 </div>
 
 
@@ -201,6 +203,149 @@
           </div>
         </div>
       </div>
+
+    </div>
+
+
+    <div class="default-modal-background">
+
+      <div class="cart-modal-item-quantity">
+
+        <form action="/cart/update_item_quantity" method="POST">
+          <div class="cart-modal-item-quantity-info">
+            <div class="cart-modal-item-quantity-img">
+              <img id="modal_item_img" class="default-image-wrap" src="" alt="">
+            </div>
+            <div class="cart-modal-item-quantity-description">
+              <div id="modal_item_design_name" class="cart-modal-item-quantity-name">
+                Yoda Desk Decor
+              </div>
+              <div id="modal_item_designer_name" class="cart-modal-item-quantity-creator">
+                by LaufeyLaufey
+              </div>
+              <div class="cart-modal-item-quantity-input">
+                <div class="cart-modal-item-quantity-label">
+                  Quantity:
+                </div>
+                <select name="item_quantity" id="modal_item_quantity">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="10+">10+</option>
+                </select>
+                <input type="hidden" id="modal_design_id" name="design_id" value="">
+              </div>
+            </div>
+          </div>
+          <div class="cart-modal-item-quantity-btn">
+            <div id="modal_item_remove" class="cart-modal-item-quantity-btn-remove button-white-red" onclick="redirect('/cart/remove_item/id')">
+              Remove
+            </div>
+
+            <div class="cart-modal-item-quantity-btn-cancel button-white-grey" onclick="hideModal('cart-modal-item-quantity')">
+              Cancel
+            </div>
+
+            <button class="cart-modal-item-quantity-btn-update button-white">
+              Update
+            </button>
+          </div>
+
+        </form>
+
+
+      </div>
+
+      <div class="cart-modal-shop-selection">
+        <div class="cart-modal-shop-selection-info">
+          <div class="cart-modal-shop-selection-img">
+            <img class="default-image-wrap" src="<%= shop[0].img_url %>" alt="">
+          </div>
+          <div class="cart-modal-shop-selection-description">
+            <div class="cart-modal-shop-selection-label">
+              Selected print shop:
+            </div>
+            <div class="cart-modal-shop-selection-name-address">
+              <div class="cart-modal-shop-selection-name">
+                <%= shop[0].shop_name %>
+              </div>
+              <div class="cart-modal-shop-selection-address">
+                <%= shop[0].shop_address %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cart-modal-shop-selection-btn">
+          <button class="cart-shop-selection-btn-remove button-white-red" onclick="redirect('/remove_shop')">
+            Remove
+          </button>
+          <button class="cart-modal-shop-selection-btn-cancel button-white-grey" onclick="hideModal('cart-modal-shop-selection')">
+            Cancel
+          </button>
+          <button class=" cart-modal-shop-selection-btn-update button-white" onclick="redirect('/search/shop')">
+            Change
+          </button>
+        </div>
+      </div>
+
+      <div class="cart-modal-item-material">
+        <div class="cart-modal-item-material-info">
+          <div class="cart-modal-item-material-img">
+            <img class="default-img-wrap" src="" alt="">
+            <div class="cart-modal-item-material-remaining">
+              Remaining: 3
+            </div>
+          </div>
+          <div class="cart-modal-item-material-description">
+            <div class="cart-modal-item-material-name">
+              Yoda Desk Decor
+            </div>
+            <div class="cart-modal-item-material-creator">
+              Selected shop: Printaroo
+            </div>
+            <div class="cart-modal-item-material-inputs">
+              <div class="cart-modal-item-material-input">
+                <div class="cart-modal-item-material-label">
+                  Quantity:
+                </div>
+                <input class="cart-modal-item-material-input-quantity" type="text" class="cart-modal-item-quantity-textarea"></input>
+              </div>
+              <div class="cart-modal-item-material-input">
+                <div class="cart-modal-item-material-label">
+                  Material:
+                </div>
+                <input class="cart-modal-item-material-input-quantity" type="text" class="cart-modal-item-quantity-textarea"></input>
+              </div>
+              <div class="cart-modal-item-material-input">
+                <div class="cart-modal-item-material-label">
+                  Color:
+                </div>
+                <input class="cart-modal-item-material-input-quantity" type="text" class="cart-modal-item-quantity-textarea"></input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cart-modal-item-material-btn">
+          <button class="cart-modal-item-material-btn-remove button-white-red">
+            Remove
+          </button>
+          <button class="cart-modal-item-material-btn-cancel button-white-grey">
+            Cancel
+          </button>
+          <button class="cart-modal-item-material-btn-update button-white">
+            Update
+          </button>
+        </div>
+      </div>
+
+
 
     </div>
 
