@@ -682,17 +682,21 @@ CREATE TABLE user_cart_design (
 );
 
 \! echo "table user_cart_shop_selection"
-DROP TABLE IF EXISTS user_cart_shop_selection;
+DROP TABLE IF EXISTS user_cart_shop_selection CASCADE;
 CREATE TABLE user_cart_shop_selection (
     id SERIAL,
     user_id INT,
-    shop_id INT
+    shop_id INT,
+
+    CONSTRAINT uc_shop_selection UNIQUE(shop_id)
 );
 
 
+
 \! echo "table user_cart_shop"
-DROP TABLE IF EXISTS user_cart_shop;
+DROP TABLE IF EXISTS user_cart_shop CASCADE;
 CREATE TABLE user_cart_shop (
+    id SERIAL,
     user_id INT,
     shop_id INT,
     design_id INT,
@@ -730,6 +734,13 @@ ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_design_id
 ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_shop_id
     FOREIGN KEY(shop_id)
     REFERENCES shops(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_selection_shop_id
+    FOREIGN KEY(shop_id)
+    REFERENCES user_cart_shop_selection(shop_id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_filaments
+    FOREIGN KEY(design_filament)
+    REFERENCES shop_filaments(shop_filament_type) ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 \! echo""
 \! echo "insert users"
@@ -739,31 +750,18 @@ VALUES
 \! echo "insert users_cart_shop_selection"
 INSERT INTO user_cart_shop_selection(user_id, shop_id)
 VALUES
-    (1, -1);
+    (1, 2);
 
-
--- DROP TABLE IF EXISTS user_cart;
--- CREATE TABLE user_cart (
---     id SERIAL,
---     user_id INT,
---     cart_total DECIMAL
--- )
-
-
-
-\! echo ""
-
--- \! echo "insert cart"
--- INSERT INTO cart(cart_user)
--- VALUES
---     ('default_cart');
-
--- \! echo ""
-
+INSERT INTO user_cart_shop(user_id, shop_id, design_id, design_quantity, design_filament, design_color)
+VALUES
+    (1, 2, 3, 2, 'PLA', 'Blue'),
+    (1, 2, 4, 1, 'Nylon', 'Red');
 
 \! echo ""
 
 
+
+\! echo ""
 
 
 \! echo "-------views--------"
@@ -987,6 +985,21 @@ SELECT
     INNER JOIN shop_location ON shops.id = shop_location.shop_id
     INNER JOIN shop_images ON shops.id = shop_images.shop_id;
 
+\! echo "view cart_view_items_materials"
+
+CREATE VIEW cart_view_items_materials AS
+SELECT
+    user_cart_shop.id AS item_order,
+    user_cart_shop.user_id,
+    user_cart_shop.design_id,
+    user_cart_shop.shop_id,
+    designs.design_weight,
+    user_cart_shop.design_quantity AS qtd,
+    user_cart_shop.design_filament AS material,
+    user_cart_shop.design_color AS color
+
+    FROM user_cart_shop
+    INNER JOIN designs ON user_cart_shop.design_id = designs.id;
 
 
 -- \! echo "___________________________________________________________________________"

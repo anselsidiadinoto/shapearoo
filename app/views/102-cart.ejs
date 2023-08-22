@@ -134,42 +134,42 @@
               <div class="cart-order-details-item-subtotal">
                 $<%= designs[i].subtotal %>
               </div>
+
+
+
+
               <div class="cart-order-details-print-info">
 
-                <div class="cart-order-details-print-item">
-                  <div class="cart-order-details-print-item-qtd">
-                    (1)
-                  </div>
-                  <div class="cart-order-details-print-item-text">
-                    <div>PLA, Blue ($0.15/gr)</div>
-                    <div>est. weight : 20 gr (ea. $3)</div>
-                    <div>$3</div>
-                  </div>
-                </div>
+                <% for(j = 0; j<materials.length; j++) { %>
 
                 <div class="cart-order-details-print-item">
                   <div class="cart-order-details-print-item-qtd">
-                    (3)
+                    (<%= materials[j].qtd %>)
                   </div>
                   <div class="cart-order-details-print-item-text">
-                    <div>PLA, Blue ($0.2/gr)</div>
-                    <div>est. weight : 25 gr (ea. $5)</div>
-                    <div>$10</div>
+                    <div><%= materials[j].material %>, <%= materials[j].color %> ($<%= materials[j].price %>/gr)</div>
+                    <div>est. weight : <%= materials[j].design_weight %> gr (ea. $<%= materials[j].item_price_each %>)</div>
+                    <div>$<%= materials[j].item_subtotal %></div>
+                    <div class="cart-order-details-print-edit">
+                      <a href="#">edit print details</a>
+                    </div>
                   </div>
+
                 </div>
 
-                <div class="cart-order-details-print-edit">
-                  <a href="#">edit print details</a>
-                </div>
+
+                <% } %>
 
               </div>
 
+
+
               <div class="cart-order-details-print-subtotal">
-                $13
+                $<%= designs[i].print_subtotal %>
               </div>
 
               <div class="cart-order-details-print-total">
-                $17.5
+                $<%= designs[i].item_total %>
               </div>
             </div>
 
@@ -294,6 +294,7 @@
           </button>
         </div>
       </div>
+
 
       <div class="cart-modal-item-material">
         <div class="cart-modal-item-material-info">

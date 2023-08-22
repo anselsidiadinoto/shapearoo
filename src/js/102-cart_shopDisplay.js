@@ -4,7 +4,7 @@ function shopDisplay() {
     if (
         document.getElementsByClassName('cart-order-details-info')[0]
         .firstElementChild.id == 'shop_id_unassigned'
-       ) {
+        ) {
         document.getElementsByClassName('cart-order-details-shop-image')[0]
             .style.display = 'none';
         document.getElementsByClassName('cart-order-details-shop-name')[0]

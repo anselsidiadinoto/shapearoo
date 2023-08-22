@@ -977,7 +977,7 @@ body {
     margin-left: 1rem;
 }
 
-.cart-order-details-print-item-text div:last-child {
+.cart-order-details-print-item-text div:nth-child(3) {
     margin-top: 0.5rem;
     font-size: 2rem;
 }

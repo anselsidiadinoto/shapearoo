@@ -284,8 +284,45 @@ const getCart = async function (req, res) {
             `SELECT * FROM cart_view_shop_selection WHERE user_id=1 AND img_pos='2'`
         );
 
-        const designs_info = query_2.rows;
+        const query_4 = await pool.query(
+            `SELECT * FROM cart_view_items_materials WHERE user_id=1 ORDER BY item_order ASC`
+        );
+
+        let designs_info = query_2.rows;
+        let materials_info = query_4.rows;
+        let materials_subtotal = 0.0;
+        let item_subtotal = 0.0;
         let shop_selection = query_3.rows;
+
+        for (j = 0; j < designs_info.length; j++) {
+            for (i = 0; i < materials_info.length; i++) {
+                let material_details = await pool.query(
+                    `SELECT * FROM shop_filaments WHERE shop_id=$1 AND shop_filament_type=$2`,
+                    [
+                        materials_info[i].shop_id,
+                        materials_info[i].material,
+                    ]
+                );
+
+                materials_info[i].price =
+                    material_details.rows[0].shop_filament_price;
+                materials_info[i].item_price_each =
+                    materials_info[i].design_weight *
+                    materials_info[i].price;
+                materials_info[i].item_subtotal =
+                    materials_info[i].item_price_each *
+                    materials_info[i].qtd;
+
+                materials_subtotal +=
+                    materials_info[i].item_subtotal;
+            }
+
+            designs_info[j].print_subtotal =
+                materials_subtotal;
+            designs_info[j].item_total =
+                +designs_info[j].subtotal +
+                materials_subtotal;
+        }
 
         if (shop_selection[0] == undefined) {
             shop_selection = [
@@ -298,9 +335,12 @@ const getCart = async function (req, res) {
             ];
         }
 
+        console.log(designs_info);
+
         res.render('102-cart', {
             shop: shop_selection,
             designs: designs_info,
+            materials: materials_info,
         });
     } catch (error) {
         console.log(error);
