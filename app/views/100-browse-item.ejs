@@ -26,7 +26,7 @@
             <div class="browse-items-name default-link-hover" onclick="redirect(`/search/item/<%= info.design_id %>`)"><%= info.design_name %></div>
             <div class="browse-items-creator default-link-hover" onclick="redirect(`/search/designer/<%= info.designer_id %>`)">by <%= info.designer_name %></div>
           </div>
-          <button class="browse-items-btn-add default-button">+</button>
+          <button class="browse-items-btn-add default-button" onclick="redirect('/add/item/<%= info.design_id %>')">+</button>
         </div>
       </div>
 

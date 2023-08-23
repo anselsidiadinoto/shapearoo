@@ -1,3 +1,55 @@
+window.onload = hideAddPrintDetails()
+
+function hideAddPrintDetails() {
+    const cartItems = document.getElementsByClassName('cart-order-details-item-id');
+    for(i = 0; i < cartItems.length; i++) {
+        let currentItemId = +cartItems[i].innerHTML.trim();
+        let currentItemRemaining = 
+            +document.getElementById(`items_remaining_id_${currentItemId}`)
+                .innerHTML.trim();
+
+        if(currentItemRemaining == 0) {
+            document.getElementById(`cart_add_remining_item_id_${currentItemId}`)
+                .style.display = 'none';
+        }
+    }
+}
+
+function checkInputValues() {
+    const input_quantity = 
+        document.getElementById('modal_item_material_quantity');
+    const input_material = 
+        document.getElementById('modal_item_material_type');
+    const input_color = 
+        document.getElementById('modal_item_material_color');
+
+    const selected_quantity = input_quantity.selectedIndex;
+    const selected_material = input_material.selectedIndex;
+    const selected_color = input_color.selectedIndex;
+    const button = document.getElementById('modal_item_material_add_update');
+
+    console.log(input_quantity[selected_quantity].value);
+    console.log(input_material[selected_material].value);
+    console.log(input_color[selected_color].value);
+
+    if(
+        input_quantity[selected_quantity].value == '' ||
+        input_material[selected_material].value == '' ||
+        input_color[selected_color].value == ''
+      ) {
+        console.log('disabled');
+        button.disabled = true;
+        button.style.cursor = 'auto';
+        button.style.borderColor = 'lightgrey';
+    } else {
+        console.log('enabled');
+        button.disabled = false;
+        button.style.cursor = 'pointer';
+        button.style.borderColor = 'black';
+    }
+}
+
+
 function hideModal(modal) {
     document.getElementsByClassName(modal)[0]
         .style.display = 'none';
@@ -86,7 +138,7 @@ function modalItemMaterials(item_id) {
     document.getElementById('modal_item_material_add_update')
         .innerHTML = 'Add';
     
-    
+    checkInputValues();
 
     materialQuantity(item_id);
     materialType(item_id);
@@ -142,13 +194,10 @@ function materialType(item_id) {
         material_option.innerHTML = shop_materials_array[i];
         document.getElementById('modal_item_material_type').appendChild(material_option);
     }
-
-    
-
-
 }
 
 function materialColor(item_id) {
+    checkInputValues();
 
     const shop_materials = document.getElementsByClassName('cart-order-details-shop-filament');
     const index = document.getElementById('modal_item_material_type').selectedIndex;
@@ -165,10 +214,9 @@ function materialColor(item_id) {
     for(i = 0; i < shop_materials.length; i++) {
         let material = shop_materials[i].firstElementChild.innerHTML.trim();
         let color = shop_materials[i].lastElementChild.innerHTML.trim()
-        console.log(color);
 
         if (material == selected_material && !material_colors_set.has(color)) {
-            shop_color_array.push(color)
+            shop_color_array.push(color);
         } 
     }
     
@@ -185,7 +233,7 @@ function materialColor(item_id) {
 }
 
 
-function editItemMaterial(item_id, item_qtd, item_remaining_qtd, item_material, item_color) {
+function editItemMaterial(item_id, item_qtd, item_current_qtd,item_remaining_qtd, item_material, item_color) {
 
     document.getElementsByClassName('cart-modal-item-material')[0]
         .style.display = 'flex';
@@ -222,15 +270,17 @@ function editItemMaterial(item_id, item_qtd, item_remaining_qtd, item_material, 
     document.getElementById('modal_item_material_add_update')
         .innerHTML = 'Update';
     
-    editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd);
+    editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd, item_current_qtd);
     editItemMaterialType(item_id, item_material);
     editItemMaterialColor(item_id, item_color);
    
 }
 
-function editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd) {
+function editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd, item_current_qtd) {
 
     document.getElementById('modal_item_material_quantity').innerHTML = '';
+
+    console.log(item_qtd, item_remaining_qtd);
 
     for(i = 0; i < Math.max(item_remaining_qtd, item_qtd); i++) {
         let current_qtd_option = document.createElement('option')
@@ -239,7 +289,7 @@ function editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd) {
 
         document.getElementById('modal_item_material_quantity').appendChild(current_qtd_option);
 
-        if(current_qtd_option.value == item_qtd) {
+        if(current_qtd_option.value == item_current_qtd) {
             document.getElementById('modal_item_material_quantity').selectedIndex = i;
         }
     }

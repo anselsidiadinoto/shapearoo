@@ -697,12 +697,12 @@ CREATE TABLE user_cart_shop_selection (
 DROP TABLE IF EXISTS user_cart_shop CASCADE;
 CREATE TABLE user_cart_shop (
     id SERIAL,
-    user_id INT,
-    shop_id INT,
-    design_id INT,
-    design_quantity INT,
-    design_filament TEXT,
-    design_color TEXT
+    user_id INT NOT NULL,
+    shop_id INT NOT NULL,
+    design_id INT NOT NULL,
+    design_quantity INT NOT NULL,
+    design_filament TEXT NOT NULL,
+    design_color TEXT NOT NULL
 );
 
 \! echo""
@@ -747,7 +747,7 @@ VALUES
 \! echo "insert users_cart_shop_selection"
 INSERT INTO user_cart_shop_selection(user_id, shop_id)
 VALUES
-    (1, 2);
+    (1, -1);
 
 -- INSERT INTO user_cart_shop(user_id, shop_id, design_id, design_quantity, design_filament, design_color)
 -- VALUES
@@ -979,8 +979,8 @@ SELECT
     FROM users
     INNER JOIN user_cart_shop_selection ON users.id = user_cart_shop_selection.user_id
     INNER JOIN shops ON user_cart_shop_selection.shop_id = shops.id
-    INNER JOIN shop_location ON shops.id = shop_location.shop_id
-    INNER JOIN shop_images ON shops.id = shop_images.shop_id;
+    LEFT JOIN shop_location ON shops.id = shop_location.shop_id
+    LEFT JOIN shop_images ON shops.id = shop_images.shop_id AND shop_images.shop_image_position='2';
 
 \! echo "view cart_view_items_materials"
 

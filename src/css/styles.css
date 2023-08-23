@@ -736,6 +736,9 @@ body {
     height: 14rem;
 }
 
+.cart-order-details-shop-image {
+    cursor: auto;
+}
 
 
 .cart-order-details-shop-add-btn {
@@ -925,9 +928,16 @@ body {
     border-bottom: solid 0.1rem var(--clr-border-light);
 }
 
+.cart-order-details-item-id {
+    display: none;
+}
+
 .cart-order-details-item-qtd {
     width: 5rem;
     font-size: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    justify-content: center;
 }
 .cart-order-details-item-info {
     width: 31rem;

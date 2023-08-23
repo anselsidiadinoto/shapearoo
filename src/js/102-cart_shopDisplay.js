@@ -4,7 +4,7 @@ window.onload = materialDisplay();
 function shopDisplay() {
     if (
         document.getElementsByClassName('cart-order-details-info')[0]
-        .firstElementChild.id == 'shop_id_unassigned'
+        .firstElementChild.id == 'shop_id_-1'
         ) {
         document.getElementsByClassName('cart-order-details-shop-image')[0]
             .style.display = 'none';

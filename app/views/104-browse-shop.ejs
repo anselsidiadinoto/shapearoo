@@ -61,7 +61,7 @@
           </div>
 
           <div class="browse-shops-item-buttons">
-            <button class="browse-shops-item-btn default-button">Select Shop</button>
+            <button class="browse-shops-item-btn default-button" onclick="redirect(`/add/shop/${<%= shop[i].id %>}`)">Select Shop</button>
             <button class="browse-shops-item-btn default-button" onclick="redirect('/search/shop/<%= shop[i].id %>')">Profile</button>
 
           </div>

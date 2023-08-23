@@ -28,7 +28,7 @@ router.get('/search/shop', controller.getShops);
 
 router.get('/add/shop/:id', controller.addShop);
 
-router.get('/remove_shop', controller.removeShop);
+router.get('/remove_shop/:id', controller.removeShop);
 
 router.get('/search/designer/:id', controller.getDesigner);
 

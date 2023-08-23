@@ -5,6 +5,7 @@
   <%- include('partials/0001-head-default') %>
   <script src="/js/102-cart_shopDisplay.js" defer></script>
   <script src="/js/102-cart_modals.js" defer></script>
+  <script src="/js/102-cart_grandTotalDisplay.js" defer></script>
   <title>Shapearoo - Cart</title>
 </head>
 
@@ -27,7 +28,7 @@
         <div class="cart-order-details">
           <div class="cart-order-details-info">
             <div id="shop_id_<%= shop[0].shop_id %>" class="cart-order-details-shop-img" onclick="redirect('/search/shop')">
-              <img class="cart-order-details-shop-image default-image-wrap" src="<%= shop[0].img_url %>" onclick="redirect('/search/shop/<%= shop[0].shop_id %>')" alt="">
+              <img class="cart-order-details-shop-image default-image-wrap" src="<%= shop[0].img_url %>" alt="">
               <div class="cart-order-details-shop-add-btn">+</div>
               <div class="cart-order-details-shop-add-text">select shop</div>
             </div>
@@ -66,8 +67,8 @@
 
               <div class="cart-order-details-shipping-address">
                 <div>Address: </div>
-                <div>Naomi Nagata</div>
-                <div>309 W 109th Street</div>
+                <div>John Doe</div>
+                <div>123 W 55th Street</div>
                 <div>New York, NY, 10044</div>
               </div>
 
@@ -77,7 +78,7 @@
               </div>
 
               <div class="cart-order-details-shipping-cost">
-                $15.00
+                $10.00
               </div>
 
               <a class="cart-order-details-shipping-edit" href="#"> edit delivery option</a>
@@ -90,7 +91,7 @@
 
               <div class="cart-order-details-payment-method">
                 <div>venmo</div>
-                <div>@naominaomi</div>
+                <div>@johndoe</div>
               </div>
 
               <div class="cart-order-details-payment-address">
@@ -100,7 +101,7 @@
 
               <div class="cart-order-details-payment-invoice">
                 <div>Send invoice to:</div>
-                <div>naominaomi@gmail.com</div>
+                <div>johndoe@gmail.com</div>
               </div>
 
               <a class="cart-order-details-payment-edit" href="#"> edit payment preferences</a>
@@ -127,6 +128,9 @@
 
 
             <div class="cart-order-details-item">
+              <div class="cart-order-details-item-id">
+                <%= designs[i].id %>
+              </div>
               <div id="item_quantity_id_<%= designs[i].id %>" class="cart-order-details-item-qtd">
                 <%= designs[i].qtd %>
               </div>
@@ -179,6 +183,7 @@
                     <div class="cart-order-details-print-edit">
                       <a href="#" onclick="editItemMaterial(
                         <%= designs[i].id %>, 
+                        <%= designs[i].qtd %>,
                         <%= designs[i].materials[j].qtd %>, 
                         <%= designs[i].remaining_qtd %>, 
                         '<%= designs[i].materials[j].material %>', 
@@ -189,7 +194,7 @@
                 </div>
                 <% } %>
 
-                <div class="cart-order-details-print-add">
+                <div id="cart_add_remining_item_id_<%= designs[i].id %>" class="cart-order-details-print-add">
                   <div class="cart-order-details-print-add-text">
                     remaining items to assign: (
                     <div id="items_remaining_id_<%= designs[i].id %>">
@@ -209,7 +214,10 @@
               </div>
 
               <div class="cart-order-details-print-total">
-                $<%= designs[i].item_total %>
+                $
+                <div class="cart-order-details-item-total">
+                  <%= designs[i].item_total %>
+                </div>
               </div>
             </div>
 
@@ -228,15 +236,15 @@
             </div>
             <div class="cart-order-summary-items">
               <div>Items: </div>
-              <div>$37.50</div>
+              <div id="cart-order-items-all-total">$37.50</div>
             </div>
             <div class="cart-order-summary-shipping">
               <div>Shipping: </div>
-              <div>$15.50</div>
+              <div>$10</div>
             </div>
             <div class="cart-order-summary-total">
               <div>Total: </div>
-              <div>$52.50</div>
+              <div id="cart-order-grand-total">$52.50</div>
             </div>
             <button class="cart-order-summary-button accent-button">Place Order</button>
 
@@ -322,7 +330,7 @@
           </div>
         </div>
         <div class="cart-modal-shop-selection-btn">
-          <button class="cart-shop-selection-btn-remove button-white-red" onclick="redirect('/remove_shop')">
+          <button class="cart-shop-selection-btn-remove button-white-red" onclick="redirect('/remove_shop/<%= shop[0].shop_id %>')">
             Remove
           </button>
           <button class="cart-modal-shop-selection-btn-cancel button-white-grey" onclick="hideModal('cart-modal-shop-selection')">
@@ -356,9 +364,8 @@
                   <div class="cart-modal-item-material-label">
                     Quantity:
                   </div>
-                  <select class="cart-modal-item-material-input-quantity" name="material_quantity" id="modal_item_material_quantity">
+                  <select class="cart-modal-item-material-input-quantity" name="material_quantity" id="modal_item_material_quantity" onchange="checkInputValues()">
                     <option disabled selected value></option>
-
                   </select>
                 </div>
                 <div class="cart-modal-item-material-input">
@@ -373,7 +380,7 @@
                   <div class="cart-modal-item-material-label">
                     Color:
                   </div>
-                  <select class="cart-modal-item-material-input-color" name="material_color" id="modal_item_material_color">
+                  <select class="cart-modal-item-material-input-color" name="material_color" id="modal_item_material_color" onchange="checkInputValues()">
                     <option disabled selected value></option>
                   </select>
                 </div>

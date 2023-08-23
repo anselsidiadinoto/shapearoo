@@ -200,9 +200,15 @@ const addShop = async function (req, res) {
 };
 
 const removeShop = async function (req, res) {
+    const shop_id = req.params.id;
+    console.log(shop_id);
     try {
         await pool.query(
             `UPDATE user_cart_shop_selection SET shop_id=-1 WHERE user_id=1`
+        );
+
+        await pool.query(
+            `DELETE FROM user_cart_shop WHERE user_id=1`
         );
 
         res.redirect(req.get('referer'));
@@ -318,7 +324,7 @@ const getCart = async function (req, res) {
             `SELECT * FROM cart_view_items ORDER BY cart_item_order ASC`
         );
         const query_3 = await pool.query(
-            `SELECT * FROM cart_view_shop_selection WHERE user_id=1 AND img_pos='2'`
+            `SELECT * FROM cart_view_shop_selection WHERE user_id=1`
         );
 
         let designs_info = query_2.rows;
@@ -341,11 +347,15 @@ const getCart = async function (req, res) {
 
             for (j = 0; j < material_details.length; j++) {
                 designs_info[i].materials[j].item_price_each =
-                    material_details[j].design_weight *
-                    material_details[j].price;
+                    +Math.round(
+                        material_details[j].design_weight *
+                            material_details[j].price
+                    );
                 designs_info[i].materials[j].item_subtotal =
-                    material_details[j].item_price_each *
-                    material_details[j].qtd;
+                    +Math.round(
+                        material_details[j].item_price_each *
+                            material_details[j].qtd
+                    ).toFixed(2);
 
                 materials_subtotal +=
                     material_details[j].item_subtotal;
@@ -356,9 +366,11 @@ const getCart = async function (req, res) {
 
             designs_info[i].remaining_qtd =
                 material_quantity_remaining;
-            designs_info[i].print_subtotal = materials_subtotal;
+            designs_info[i].print_subtotal = +Math.round(
+                +materials_subtotal
+            );
             designs_info[i].item_total =
-                +designs_info[i].subtotal + materials_subtotal;
+                +designs_info[i].subtotal + +materials_subtotal;
         }
 
         if (shop_selection[0] == undefined) {
@@ -379,6 +391,7 @@ const getCart = async function (req, res) {
                 },
             ];
         }
+
         let query_5 = [];
         if (query_3.rows[0].shop_id == 'unassigned') {
             query_5.rows = [
