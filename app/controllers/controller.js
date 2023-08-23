@@ -259,6 +259,9 @@ const removeItem = async function (req, res) {
         await pool.query(
             `DELETE FROM user_cart_design WHERE user_id=1 AND design_id=${design_id}`
         );
+        await pool.query(
+            `DELETE FROM user_cart_shop WHERE user_id=1 AND design_id=${design_id}`
+        );
         res.redirect(req.get('referer'));
     } catch (error) {
         console.log(error);

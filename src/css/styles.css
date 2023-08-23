@@ -237,6 +237,16 @@ body {
     display: none;
 }
 
+.default-modal-link {
+    color: var(--clr-main);
+    text-decoration: underline;
+}
+
+.default-modal-link:hover {
+    color: #1841a7;
+    cursor: pointer;
+}
+
 /* ------------------ 000-HOME ------------------ */
 
 .hero {
@@ -399,12 +409,14 @@ body {
     margin-bottom: 4rem;
     /* background-color: antiquewhite; */
     display: flex;
+
 }
 
 .browse-nav {~
     display: flex;
     flex-direction: column;
     /* background-color: rgb(201, 201, 236); */
+
 }
 
 .browse-nav-user {
@@ -420,8 +432,13 @@ body {
 }
 
 .browse-nav-logout {
+    color: var(--clr-text-inactive);
+    font-weight: 100;
     padding-left: 1rem;
     padding-bottom: 0.3rem;
+    display: flex;
+    align-items: end;
+    font-size: 2rem;
 }
 
 .tabs-text {
@@ -439,7 +456,7 @@ body {
     gap: 0.8rem;
 }
 
-.browse-banner {
+/* .browse-banner {
     font-size: 12rem;
     font-weight: 300;
     color: var(--clr-main);
@@ -447,6 +464,20 @@ body {
     right: -3.5rem;
     top: 1rem;
     letter-spacing: -0.3rem;
+} */
+
+.browse-banner {
+    font-size: 5rem;
+    font-weight: 300;
+    color: var(--clr-main);
+    right: -3.5rem;
+    top: 1rem;
+    letter-spacing: -0.3rem;
+
+    display: flex;
+    flex-grow: 1;
+    justify-content: end;
+    align-items: end;
 }
 
 .browse-search {

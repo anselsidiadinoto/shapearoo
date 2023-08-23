@@ -41,8 +41,9 @@
                 <div><%= shop[0].shop_address %></div>
               </div>
 
-              <a class="cart-order-details-shop-change" href="#" onclick="modalShopSelection()"> select print shop</a>
-              <!-- <a class="cart-order-details-shop-contact" href="#"> contact shop</a> -->
+              <div class="cart-order-details-shop-change default-modal-link" onclick="modalShopSelection()">
+                select print shop
+              </div>
 
               <div id="shop_materials_info" class="cart-order-details-shop-filaments-info">
 
@@ -67,7 +68,7 @@
 
               <div class="cart-order-details-shipping-address">
                 <div>Address: </div>
-                <div>John Doe</div>
+                <div>Guest Guest</div>
                 <div>123 W 55th Street</div>
                 <div>New York, NY, 10044</div>
               </div>
@@ -80,8 +81,7 @@
               <div class="cart-order-details-shipping-cost">
                 $10.00
               </div>
-
-              <a class="cart-order-details-shipping-edit" href="#"> edit delivery option</a>
+              <div class="cart-order-details-shipping-edit">edit delivery option</div>
             </div>
 
             <div class="cart-order-details-payment">
@@ -91,7 +91,7 @@
 
               <div class="cart-order-details-payment-method">
                 <div>venmo</div>
-                <div>@johndoe</div>
+                <div>@guestguest</div>
               </div>
 
               <div class="cart-order-details-payment-address">
@@ -103,8 +103,7 @@
                 <div>Send invoice to:</div>
                 <div>johndoe@gmail.com</div>
               </div>
-
-              <a class="cart-order-details-payment-edit" href="#"> edit payment preferences</a>
+              <div class="cart-order-details-payment-edit">edit payment preferences</div>
             </div>
           </div>
 
@@ -144,8 +143,8 @@
                   <div>
                     $<%= designs[i].price %>
                   </div>
-                  <div>
-                    <a href="#" onclick="modalItemQuantity(<%= designs[i].id %>)">edit design details</a>
+                  <div class="default-modal-link" onclick="modalItemQuantity(<%= designs[i].id %>)">
+                    edit design details
                   </div>
                 </div>
 
@@ -180,15 +179,15 @@
                       (ea. $<%= designs[i].materials[j].item_price_each %>)
                     </div>
                     <div>$<%= designs[i].materials[j].item_subtotal %></div>
-                    <div class="cart-order-details-print-edit">
-                      <a href="#" onclick="editItemMaterial(
-                        <%= designs[i].id %>, 
-                        <%= designs[i].qtd %>,
-                        <%= designs[i].materials[j].qtd %>, 
-                        <%= designs[i].remaining_qtd %>, 
-                        '<%= designs[i].materials[j].material %>', 
-                        '<%= designs[i].materials[j].color %>'
-                        )">edit print details</a>
+                    <div class="cart-order-details-print-edit default-modal-link" onclick="editItemMaterial(
+                      <%= designs[i].id %>, 
+                      <%= designs[i].qtd %>,
+                      <%= designs[i].materials[j].qtd %>, 
+                      <%= designs[i].remaining_qtd %>, 
+                      '<%= designs[i].materials[j].material %>', 
+                      '<%= designs[i].materials[j].color %>'
+                      )">
+                      edit print details
                     </div>
                   </div>
                 </div>
@@ -202,7 +201,8 @@
                     </div>
                     )
                   </div>
-                  <a href="#" onclick="modalItemMaterials(<%= designs[i].id %>)">add print details</a>
+                  <div class="default-modal-link" onclick="modalItemMaterials(<%= designs[i].id %>)">add print details</div>
+
                 </div>
 
               </div>
