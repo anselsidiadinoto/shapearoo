@@ -737,9 +737,6 @@ ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_shop_id
 ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_shop_selection_shop_id
     FOREIGN KEY(shop_id)
     REFERENCES user_cart_shop_selection(shop_id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE user_cart_shop ADD CONSTRAINT fk_user_cart_filaments
-    FOREIGN KEY(design_filament)
-    REFERENCES shop_filaments(shop_filament_type) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 \! echo""
@@ -752,10 +749,10 @@ INSERT INTO user_cart_shop_selection(user_id, shop_id)
 VALUES
     (1, 2);
 
-INSERT INTO user_cart_shop(user_id, shop_id, design_id, design_quantity, design_filament, design_color)
-VALUES
-    (1, 2, 3, 2, 'PLA', 'Blue'),
-    (1, 2, 4, 1, 'Nylon', 'Red');
+-- INSERT INTO user_cart_shop(user_id, shop_id, design_id, design_quantity, design_filament, design_color)
+-- VALUES
+--     (1, 2, 3, 2, 'PLA', 'Blue'),
+--     (1, 2, 4, 1, 'Nylon', 'Red');
 
 \! echo ""
 
@@ -991,15 +988,34 @@ CREATE VIEW cart_view_items_materials AS
 SELECT
     user_cart_shop.id AS item_order,
     user_cart_shop.user_id,
-    user_cart_shop.design_id,
+    designs.id AS design_id,
     user_cart_shop.shop_id,
     designs.design_weight,
     user_cart_shop.design_quantity AS qtd,
     user_cart_shop.design_filament AS material,
-    user_cart_shop.design_color AS color
+    user_cart_shop.design_color AS color,
+    shop_filaments.shop_filament_price AS price
 
     FROM user_cart_shop
-    INNER JOIN designs ON user_cart_shop.design_id = designs.id;
+    -- INNER JOIN user_cart_design ON user_cart_shop.design_id = user_cart_design.design_id;
+    INNER JOIN designs ON user_cart_shop.design_id = designs.id
+    INNER JOIN shop_filaments ON user_cart_shop.shop_id = shop_filaments.shop_id 
+        AND user_cart_shop.design_filament = shop_filaments.shop_filament_type;
+
+-- CREATE VIEW cart_view_item_materials_price AS
+-- SELECT
+--     cart_view_items_materials.item_order,
+--     cart_view_items_materials.user_id,
+--     cart_view_items_materials.design_id,
+--     cart_view_items_materials.shop_id,
+--     cart_view_items_materials.design_weight,
+--     cart_view_items_materials.qtd,
+--     cart_view_items_materials.material,
+--     cart_view_items_materials.color,
+--     shop_filaments.shop_filament_price AS price
+
+--     FROM cart_view_items_materials;
+--     INNER JOIN 
 
 
 -- \! echo "___________________________________________________________________________"

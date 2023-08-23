@@ -14,6 +14,8 @@ router.get('/cart', controller.getCart);
 
 router.post('/cart/update_item_quantity',controller.updateItemQuantity);
 
+router.post('/cart/add_item_material', controller.addItemMaterial);
+
 router.get('/cart/remove_item/:id', controller.removeItem);
 
 router.get('/search/shop/:id', controller.getShop);
@@ -27,5 +29,7 @@ router.get('/remove_shop', controller.removeShop);
 router.get('/search/designer/:id', controller.getDesigner);
 
 router.get('/add/item/:id', controller.addItem);
+
+
 
 module.exports = router;

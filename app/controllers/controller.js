@@ -1,5 +1,6 @@
 const pool = require('../../db');
 const bodyParser = require('body-parser');
+const { CLIENT_RENEG_LIMIT } = require('tls');
 
 const getDesigns = async function (req, res) {
     try {
@@ -7,9 +8,7 @@ const getDesigns = async function (req, res) {
             'SELECT * FROM designs_search'
         );
         const cart_length = (
-            await pool.query(
-                'SELECT * FROM user_cart_design'
-            )
+            await pool.query('SELECT * FROM user_cart_design')
         ).rows.length;
 
         res.render('100-browse-item', {
@@ -23,13 +22,9 @@ const getDesigns = async function (req, res) {
 
 const getShops = async function (req, res) {
     try {
-        const query = await pool.query(
-            'SELECT * FROM shops_search'
-        );
+        const query = await pool.query('SELECT * FROM shops_search');
         const cart_length = (
-            await pool.query(
-                'SELECT * FROM user_cart_design'
-            )
+            await pool.query('SELECT * FROM user_cart_design')
         ).rows.length;
         let results = query.rows;
 
@@ -45,9 +40,7 @@ const getShops = async function (req, res) {
             let max_price = filaments.rows[0].price;
 
             for (j = 0; j < filaments.rows.length; j++) {
-                filaments_array.push(
-                    filaments.rows[j].type
-                );
+                filaments_array.push(filaments.rows[j].type);
                 min_price = Math.min(
                     min_price,
                     filaments.rows[j].price
@@ -86,9 +79,7 @@ const getDesign = async function (req, res) {
             `SELECT * FROM design_search_description WHERE design_id=${design_id}`
         );
         const cart_length = (
-            await pool.query(
-                'SELECT * FROM user_cart_design'
-            )
+            await pool.query('SELECT * FROM user_cart_design')
         ).rows.length;
 
         const design_info = query_1.rows;
@@ -122,9 +113,7 @@ const getDesigner = async function (req, res) {
             `SELECT * FROM designs_search WHERE designer_id=${designer_id}`
         );
         const cart_length = (
-            await pool.query(
-                'SELECT * FROM user_cart_design'
-            )
+            await pool.query('SELECT * FROM user_cart_design')
         ).rows.length;
 
         const designer_info = query_1.rows;
@@ -163,9 +152,7 @@ const getShop = async function (req, res) {
             `SELECT * FROM shop_search_printer WHERE id=${shop_id}`
         );
         const cart_length = (
-            await pool.query(
-                'SELECT * FROM user_cart_design'
-            )
+            await pool.query('SELECT * FROM user_cart_design')
         ).rows.length;
 
         const shop_info = query_1.rows;
@@ -272,11 +259,27 @@ const removeItem = async function (req, res) {
     }
 };
 
+const addItemMaterial = async function (req, res) {
+    const design_id = req.body.design_id;
+    const shop_id = req.body.shop_id;
+    const quantity = req.body.material_quantity;
+    const material = req.body.material_type;
+    const color = req.body.material_color;
+    try {
+        await pool.query(
+            'INSERT INTO user_cart_shop(user_id, shop_id, design_id, design_quantity, design_filament, design_color) VALUES($1, $2, $3, $4, $5, $6)',
+            [1, shop_id, design_id, quantity, material, color]
+        );
+
+        res.redirect(req.get('referer'));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const getCart = async function (req, res) {
     try {
-        const query_1 = await pool.query(
-            `SELECT * FROM cart_view`
-        );
+        const query_1 = await pool.query(`SELECT * FROM cart_view`);
         const query_2 = await pool.query(
             `SELECT * FROM cart_view_items ORDER BY cart_item_order ASC`
         );
@@ -284,44 +287,44 @@ const getCart = async function (req, res) {
             `SELECT * FROM cart_view_shop_selection WHERE user_id=1 AND img_pos='2'`
         );
 
-        const query_4 = await pool.query(
-            `SELECT * FROM cart_view_items_materials WHERE user_id=1 ORDER BY item_order ASC`
-        );
-
         let designs_info = query_2.rows;
-        let materials_info = query_4.rows;
         let materials_subtotal = 0.0;
         let item_subtotal = 0.0;
+        let material_quantity_remaining;
         let shop_selection = query_3.rows;
 
-        for (j = 0; j < designs_info.length; j++) {
-            for (i = 0; i < materials_info.length; i++) {
-                let material_details = await pool.query(
-                    `SELECT * FROM shop_filaments WHERE shop_id=$1 AND shop_filament_type=$2`,
-                    [
-                        materials_info[i].shop_id,
-                        materials_info[i].material,
-                    ]
-                );
+        for (i = 0; i < designs_info.length; i++) {
+            material_quantity_remaining = designs_info[i].qtd;
 
-                materials_info[i].price =
-                    material_details.rows[0].shop_filament_price;
-                materials_info[i].item_price_each =
-                    materials_info[i].design_weight *
-                    materials_info[i].price;
-                materials_info[i].item_subtotal =
-                    materials_info[i].item_price_each *
-                    materials_info[i].qtd;
+            let query_materials = await pool.query(
+                `SELECT * FROM cart_view_items_materials WHERE shop_id=$1 AND design_id=$2`,
+                [shop_selection[0].shop_id, designs_info[i].id]
+            );
+
+            let material_details = query_materials.rows;
+
+            designs_info[i].materials = query_materials.rows;
+
+            for (j = 0; j < material_details.length; j++) {
+                designs_info[i].materials[j].item_price_each =
+                    material_details[j].design_weight *
+                    material_details[j].price;
+                designs_info[i].materials[j].item_subtotal =
+                    material_details[j].item_price_each *
+                    material_details[j].qtd;
 
                 materials_subtotal +=
-                    materials_info[i].item_subtotal;
+                    material_details[j].item_subtotal;
+
+                material_quantity_remaining -=
+                    material_details[j].qtd;
             }
 
-            designs_info[j].print_subtotal =
-                materials_subtotal;
-            designs_info[j].item_total =
-                +designs_info[j].subtotal +
-                materials_subtotal;
+            designs_info[i].remaining_qtd =
+                material_quantity_remaining;
+            designs_info[i].print_subtotal = materials_subtotal;
+            designs_info[i].item_total =
+                +designs_info[i].subtotal + materials_subtotal;
         }
 
         if (shop_selection[0] == undefined) {
@@ -335,12 +338,33 @@ const getCart = async function (req, res) {
             ];
         }
 
-        console.log(designs_info);
+        if (query_3.rows[0] == undefined) {
+            query_3.rows = [
+                {
+                    shop_id: 'unassigned',
+                },
+            ];
+        }
+        let query_5 = [];
+        if (query_3.rows[0].shop_id == 'unassigned') {
+            query_5.rows = [
+                {
+                    shop_id: 'unassigned',
+                    shop_filament_type: 'unassigned',
+                    shop_filament_color: 'unassigned',
+                },
+            ];
+        } else {
+            query_5 = await pool.query(
+                `SELECT * FROM shop_filament_colors WHERE shop_id=${query_3.rows[0].shop_id} `
+            );
+        }
+        let shop_filament_details = query_5.rows;
 
         res.render('102-cart', {
             shop: shop_selection,
             designs: designs_info,
-            materials: materials_info,
+            material_info: shop_filament_details,
         });
     } catch (error) {
         console.log(error);
@@ -356,6 +380,7 @@ module.exports = {
     addShop,
     removeShop,
     addItem,
+    addItemMaterial,
     removeItem,
     updateItemQuantity,
     getCart,

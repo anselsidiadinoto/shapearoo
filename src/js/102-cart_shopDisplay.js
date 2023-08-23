@@ -1,4 +1,5 @@
 window.onload = shopDisplay();
+window.onload = materialDisplay();
 
 function shopDisplay() {
     if (
@@ -26,5 +27,22 @@ function shopDisplay() {
             .innerHTML = 'edit print shop';
         document.getElementsByClassName('cart-order-details-info')[0]
             .firstElementChild.onclick = '';
+    }
+}
+
+function materialDisplay() {
+    const itemMaterials = document.getElementsByClassName('cart-order-details-print-item')
+    for(i = 0; i < itemMaterials.length; i++) {
+        try { 
+            if (
+                document.getElementsByClassName('cart-order-details-print-item')[i]
+                .firstElementChild.innerHTML.trim() == '(unassigned)'
+                ) {
+                document.getElementsByClassName('cart-order-details-print-item')[i]
+                .style.display = 'none';
+            }
+        } catch (error) {
+            // catches uncaught type error when there is no designs added yet
+        }
     }
 }

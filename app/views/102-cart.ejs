@@ -43,6 +43,22 @@
               <a class="cart-order-details-shop-change" href="#" onclick="modalShopSelection()"> select print shop</a>
               <!-- <a class="cart-order-details-shop-contact" href="#"> contact shop</a> -->
 
+              <div id="shop_materials_info" class="cart-order-details-shop-filaments-info">
+
+                <% for(i = 0; i < material_info.length; i++) { %>
+                <div class="cart-order-details-shop-filament">
+                  <div class="cart-order-details-shop-filaments-type">
+                    <%= material_info[i].shop_filament_type %>
+                  </div>
+                  <div class="cart-order-deasils-shop-filaments-color">
+                    <%= material_info[i].shop_filament_color %>
+                  </div>
+                </div>
+                <% } %>
+
+
+              </div>
+
 
             </div>
             <div class="cart-order-details-shipping">
@@ -140,25 +156,34 @@
 
               <div class="cart-order-details-print-info">
 
-                <% for(j = 0; j<materials.length; j++) { %>
-
+                <% for(j = 0; j<designs[i].materials.length; j++) { %>
                 <div class="cart-order-details-print-item">
                   <div class="cart-order-details-print-item-qtd">
-                    (<%= materials[j].qtd %>)
+                    (<%= designs[i].materials[j].qtd %>)
                   </div>
                   <div class="cart-order-details-print-item-text">
-                    <div><%= materials[j].material %>, <%= materials[j].color %> ($<%= materials[j].price %>/gr)</div>
-                    <div>est. weight : <%= materials[j].design_weight %> gr (ea. $<%= materials[j].item_price_each %>)</div>
-                    <div>$<%= materials[j].item_subtotal %></div>
+                    <div><%= designs[i].materials[j].material %></span>, <%= designs[i].materials[j].color %> ($<%= designs[i].materials[j].price %>/gr)</div>
+                    <div>est. weight : <%= designs[i].materials[j].design_weight %> gr (ea. $<%= designs[i].materials[j].item_price_each %>)</div>
+                    <div>$<%= designs[i].materials[j].item_subtotal %></div>
                     <div class="cart-order-details-print-edit">
-                      <a href="#">edit print details</a>
+                      <a href="#" onclick="editItemMaterial(
+                        <%= designs[i].id %>, 
+                        <%= designs[i].materials[j].qtd %>, 
+                        <%= designs[i].remaining_qtd %>, 
+                        '<%= designs[i].materials[j].material %>', 
+                        '<%= designs[i].materials[j].color %>'
+                        )">edit print details</a>
                     </div>
                   </div>
-
                 </div>
-
-
                 <% } %>
+
+                <div class="cart-order-details-print-add">
+                  <div class="cart-order-details-print-add-text">
+                    remaining items to assign: (<div id="items_remaining_id_<%= designs[i].id %>"><%= designs[i].remaining_qtd %></div>)
+                  </div>
+                  <a href="#" onclick="modalItemMaterials(<%= designs[i].id %>)">add print details</a>
+                </div>
 
               </div>
 
@@ -238,7 +263,6 @@
                   <option value="8">8</option>
                   <option value="9">9</option>
                   <option value="10">10</option>
-                  <option value="10+">10+</option>
                 </select>
                 <input type="hidden" id="modal_design_id" name="design_id" value="">
               </div>
@@ -297,53 +321,67 @@
 
 
       <div class="cart-modal-item-material">
-        <div class="cart-modal-item-material-info">
-          <div class="cart-modal-item-material-img">
-            <img class="default-img-wrap" src="" alt="">
-            <div class="cart-modal-item-material-remaining">
-              Remaining: 3
+
+        <form action="/cart/add_item_material" method="POST">
+          <div class="cart-modal-item-material-info">
+            <div class="cart-modal-item-material-img">
+              <img id="modal_item_material_img" class="default-image-wrap" src="" alt="">
+              <div id="modal_item_material_remaining" class="cart-modal-item-material-remaining">
+                Remaining:
+              </div>
+            </div>
+            <div class="cart-modal-item-material-description">
+              <div class="cart-modal-item-material-name">
+                Yoda Desk Decor
+              </div>
+              <div class="cart-modal-item-material-creator">
+                Selected shop: <%= shop[0].shop_name %>
+              </div>
+              <div class="cart-modal-item-material-inputs">
+                <div class="cart-modal-item-material-input">
+                  <div class="cart-modal-item-material-label">
+                    Quantity:
+                  </div>
+                  <select class="cart-modal-item-material-input-quantity" name="material_quantity" id="modal_item_material_quantity">
+                    <option disabled selected value></option>
+
+                  </select>
+                </div>
+                <div class="cart-modal-item-material-input">
+                  <div class="cart-modal-item-material-label">
+                    Material:
+                  </div>
+                  <select class="cart-modal-item-material-input-material" name="material_type" id="modal_item_material_type" onchange="materialColor()">
+                    <option disabled selected value></option>
+                  </select>
+                </div>
+                <div class="cart-modal-item-material-input">
+                  <div class="cart-modal-item-material-label">
+                    Color:
+                  </div>
+                  <select class="cart-modal-item-material-input-color" name="material_color" id="modal_item_material_color">
+                    <option disabled selected value></option>
+                  </select>
+                </div>
+                <input id="modal_item_material_design_id" type="hidden" name="design_id" value="">
+                <input id="modal_item_material_shop_id" type="hidden" name="shop_id" value="<%= shop[0].shop_id %>">
+
+              </div>
             </div>
           </div>
-          <div class="cart-modal-item-material-description">
-            <div class="cart-modal-item-material-name">
-              Yoda Desk Decor
+          <div class="cart-modal-item-material-btn">
+            <div class="cart-modal-item-material-btn-remove button-white-red">
+              Remove
             </div>
-            <div class="cart-modal-item-material-creator">
-              Selected shop: Printaroo
+            <div class="cart-modal-item-material-btn-cancel button-white-grey" onclick="hideModal('cart-modal-item-material')">
+              Cancel
             </div>
-            <div class="cart-modal-item-material-inputs">
-              <div class="cart-modal-item-material-input">
-                <div class="cart-modal-item-material-label">
-                  Quantity:
-                </div>
-                <input class="cart-modal-item-material-input-quantity" type="text" class="cart-modal-item-quantity-textarea"></input>
-              </div>
-              <div class="cart-modal-item-material-input">
-                <div class="cart-modal-item-material-label">
-                  Material:
-                </div>
-                <input class="cart-modal-item-material-input-quantity" type="text" class="cart-modal-item-quantity-textarea"></input>
-              </div>
-              <div class="cart-modal-item-material-input">
-                <div class="cart-modal-item-material-label">
-                  Color:
-                </div>
-                <input class="cart-modal-item-material-input-quantity" type="text" class="cart-modal-item-quantity-textarea"></input>
-              </div>
-            </div>
+            <button class="cart-modal-item-material-btn-update button-white">
+              Update
+            </button>
           </div>
-        </div>
-        <div class="cart-modal-item-material-btn">
-          <button class="cart-modal-item-material-btn-remove button-white-red">
-            Remove
-          </button>
-          <button class="cart-modal-item-material-btn-cancel button-white-grey">
-            Cancel
-          </button>
-          <button class="cart-modal-item-material-btn-update button-white">
-            Update
-          </button>
-        </div>
+
+        </form>
       </div>
 
 

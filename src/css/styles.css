@@ -784,6 +784,10 @@ body {
 .cart-order-details-shop-contact {
 }
 
+.cart-order-details-shop-filaments-info {
+    display: none;
+}
+
 .cart-order-details-shipping {
     width: 17rem;
     font-size: 1.5rem;
@@ -964,6 +968,10 @@ body {
     width: 31rem;
 }
 
+.cart-order-details-print-add-text {
+    display: flex;
+}
+
 .cart-order-details-print-item {
     display: flex;
     margin-bottom: 1rem;
@@ -971,6 +979,7 @@ body {
 
 .cart-order-details-print-item-qtd {
     font-size: 1.5rem;
+    display: flex;
 }
 
 .cart-order-details-print-item-text {
@@ -1280,7 +1289,7 @@ body {
     /* background-color: antiquewhite; */
 }
 
-.cart-modal-item-material-input input {
+.cart-modal-item-material-input select {
     width: 10rem;
     text-align: center;
 }
@@ -1304,6 +1313,15 @@ body {
 .cart-modal-item-material-btn button {
     width: 10rem;
     height: 3rem;
+}
+
+.cart-modal-item-material-btn div {
+    width: 10rem;
+    height: 3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cart-modal-item-material {
