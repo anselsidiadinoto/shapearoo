@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/controller');
 
-router.get('/', (req, res) => { res.redirect('/search/item') });
+router.get('/', controller.getDesigns );
 
 router.get('/search/item', controller.getDesigns);
 
