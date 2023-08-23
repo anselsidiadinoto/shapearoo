@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/controller');
 
-router.get('/', (req, res) => {
-    res.render('000-home');
-});
+router.get('/', (req, res) => { res.redirect('/search/item') });
 
 router.get('/search/item', controller.getDesigns);
 
