@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 const router = require('./app/routes/routes');
 app.use('/', router);
 
-app.listen(3000 || process.env.PORT, function () {
+app.listen(process.env.PORT, function () {
     console.log('Server is listening');
 });
 
