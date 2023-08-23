@@ -1,3 +1,5 @@
+require('dotenv').config({ path: __dirname + '/.env' });
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -20,8 +22,8 @@ app.set('view engine', 'ejs');
 const router = require('./app/routes/routes');
 app.use('/', router);
 
-app.listen(3000, function () {
-    console.log('server is up baby');
+app.listen(3000 || process.env.PORT, function () {
+    console.log('Server is listening');
 });
 
 // ------------ TEMPLATES FOR OTHER STATIC FILES -----------------
