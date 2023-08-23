@@ -75,10 +75,22 @@ function modalItemMaterials(item_id) {
     document.getElementById('modal_item_material_design_id')
         .value = item_id;
     
+    document.getElementById('modal_item_material_item_name')
+        .innerHTML = 
+    document.getElementById(`item_design_name_id_${item_id}`)
+        .innerHTML;   
+
+    document.getElementById('form_modal_item_material')
+        .action = '/cart/add_item_material';
+    
+    document.getElementById('modal_item_material_add_update')
+        .innerHTML = 'Add';
+    
+    
 
     materialQuantity(item_id);
     materialType(item_id);
-    materialColor(item_id);
+    clearMaterialColor();
         
 }
 
@@ -97,11 +109,19 @@ function materialQuantity(item_id) {
     }
 }
 
-function materialType() {
+function clearMaterialColor() {
+    document.getElementById('modal_item_material_color').innerHTML = 
+    '<option disabled selected value></option>';
+}
+
+function materialType(item_id) {
     const shop_materials = document.getElementsByClassName('cart-order-details-shop-filament');
 
     document.getElementById('modal_item_material_type').innerHTML = 
     '<option disabled selected value></option>';
+
+    document.getElementById('modal_item_material_type')
+        .setAttribute(`onchange`, `materialColor(${item_id})`)
 
     let shop_materials_array = [];
     let shop_color_array = [];
@@ -123,25 +143,33 @@ function materialType() {
         document.getElementById('modal_item_material_type').appendChild(material_option);
     }
 
+    
+
+
 }
 
-function materialColor() {
+function materialColor(item_id) {
 
     const shop_materials = document.getElementsByClassName('cart-order-details-shop-filament');
-
     const index = document.getElementById('modal_item_material_type').selectedIndex;
     const selected_material = document.getElementById('modal_item_material_type')[index].value;
+    const current_material_colors =
+        document.getElementsByClassName(`cart-print-item-id-${item_id}-${selected_material}-color`);
+
+    const material_colors_set = new Set();
+    for(i = 0; i < current_material_colors.length; i++) {
+        material_colors_set.add(current_material_colors[i].innerHTML.trim())
+    }
 
     let shop_color_array = [];
-
     for(i = 0; i < shop_materials.length; i++) {
         let material = shop_materials[i].firstElementChild.innerHTML.trim();
         let color = shop_materials[i].lastElementChild.innerHTML.trim()
+        console.log(color);
 
-        if (material == selected_material) {
+        if (material == selected_material && !material_colors_set.has(color)) {
             shop_color_array.push(color)
-        }
-
+        } 
     }
     
     document.getElementById('modal_item_material_color').innerHTML = 
@@ -156,9 +184,8 @@ function materialColor() {
     }
 }
 
-function editItemMaterial(item_id, item_qtd, item_remaining_qtd, item_material, item_color) {
 
-    // modalItemMaterials(item_id);
+function editItemMaterial(item_id, item_qtd, item_remaining_qtd, item_material, item_color) {
 
     document.getElementsByClassName('cart-modal-item-material')[0]
         .style.display = 'flex';
@@ -177,13 +204,26 @@ function editItemMaterial(item_id, item_qtd, item_remaining_qtd, item_material, 
 
     document.getElementById('modal_item_material_design_id')
         .value = item_id;
+
+    document.getElementById('modal_item_material_item_name')
+        .innerHTML = 
+    document.getElementById(`item_design_name_id_${item_id}`)
+        .innerHTML;        
+
+    document.getElementById('modal_item_material_remove')
+        .setAttribute(
+            'onclick', 
+            `redirect('/cart/remove_item_material/${item_id}/${item_material}/${item_color}')`
+        );
+
+    document.getElementById('form_modal_item_material')
+        .action = `/cart/update_item_material`;
     
-
-
+    document.getElementById('modal_item_material_add_update')
+        .innerHTML = 'Update';
+    
     editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd);
-
     editItemMaterialType(item_id, item_material);
-
     editItemMaterialColor(item_id, item_color);
    
 }
@@ -210,36 +250,20 @@ function editItemMaterialQtd(item_id, item_qtd, item_remaining_qtd) {
 function editItemMaterialType(item_id, item_material) {
     document.getElementById('modal_item_material_type').innerHTML = '';
 
-    let shop_materials = document.getElementsByClassName('cart-order-details-shop-filament');
-
-    let shop_materials_array = [];
-    let shop_color_array = []
-
-    for(i = 0; i < shop_materials.length; i++) {
-        let material = shop_materials[i].firstElementChild.innerHTML.trim();
-
-        if(shop_materials_array.length == 0) {
-            shop_materials_array.push(material)
-        } else if(shop_materials_array[shop_materials_array.length - 1] != material) {
-            shop_materials_array.push(material);
-        }
-    }
-
-    for(i = 0; i < shop_materials_array.length; i++){
         let material_option = document.createElement('option')
-        material_option.value = shop_materials_array[i];
-        material_option.innerHTML = shop_materials_array[i];
+        material_option.value = item_material;
+        material_option.innerHTML = item_material;
 
         document.getElementById('modal_item_material_type')
         .appendChild(material_option);
+        
+        document.getElementById('modal_item_material_type').selectedIndex = 0;
 
-        if (material_option.value == item_material) {
-            document.getElementById('modal_item_material_type').selectedIndex = i;
-        }
-    }
 }
 
 function editItemMaterialColor(item_id, item_color) {
+    document.getElementById('modal_item_material_color').innerHTML = '';
+
 
     const shop_materials = document.getElementsByClassName('cart-order-details-shop-filament');
 

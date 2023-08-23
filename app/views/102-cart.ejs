@@ -162,8 +162,19 @@
                     (<%= designs[i].materials[j].qtd %>)
                   </div>
                   <div class="cart-order-details-print-item-text">
-                    <div><%= designs[i].materials[j].material %></span>, <%= designs[i].materials[j].color %> ($<%= designs[i].materials[j].price %>/gr)</div>
-                    <div>est. weight : <%= designs[i].materials[j].design_weight %> gr (ea. $<%= designs[i].materials[j].item_price_each %>)</div>
+                    <div class="cart-order-details-print-item-material-color-price">
+                      <div>
+                        <%= designs[i].materials[j].material %>,
+                      </div>
+                      <div class="cart-print-item-id-<%= designs[i].id %>-<%= designs[i].materials[j].material %>-color">
+                        <%= designs[i].materials[j].color %>
+                      </div>
+                      ($<%= designs[i].materials[j].price %>/gr)
+                    </div>
+                    <div>
+                      est. weight : <%= designs[i].materials[j].design_weight %> gr
+                      (ea. $<%= designs[i].materials[j].item_price_each %>)
+                    </div>
                     <div>$<%= designs[i].materials[j].item_subtotal %></div>
                     <div class="cart-order-details-print-edit">
                       <a href="#" onclick="editItemMaterial(
@@ -180,7 +191,11 @@
 
                 <div class="cart-order-details-print-add">
                   <div class="cart-order-details-print-add-text">
-                    remaining items to assign: (<div id="items_remaining_id_<%= designs[i].id %>"><%= designs[i].remaining_qtd %></div>)
+                    remaining items to assign: (
+                    <div id="items_remaining_id_<%= designs[i].id %>">
+                      <%= designs[i].remaining_qtd %>
+                    </div>
+                    )
                   </div>
                   <a href="#" onclick="modalItemMaterials(<%= designs[i].id %>)">add print details</a>
                 </div>
@@ -322,7 +337,7 @@
 
       <div class="cart-modal-item-material">
 
-        <form action="/cart/add_item_material" method="POST">
+        <form id="form_modal_item_material" action="/cart/add_item_material" method="POST">
           <div class="cart-modal-item-material-info">
             <div class="cart-modal-item-material-img">
               <img id="modal_item_material_img" class="default-image-wrap" src="" alt="">
@@ -331,8 +346,7 @@
               </div>
             </div>
             <div class="cart-modal-item-material-description">
-              <div class="cart-modal-item-material-name">
-                Yoda Desk Decor
+              <div id="modal_item_material_item_name" class="cart-modal-item-material-name">
               </div>
               <div class="cart-modal-item-material-creator">
                 Selected shop: <%= shop[0].shop_name %>
@@ -370,13 +384,13 @@
             </div>
           </div>
           <div class="cart-modal-item-material-btn">
-            <div class="cart-modal-item-material-btn-remove button-white-red">
+            <div id="modal_item_material_remove" class="cart-modal-item-material-btn-remove button-white-red" onclick="redirect('#')">
               Remove
             </div>
             <div class="cart-modal-item-material-btn-cancel button-white-grey" onclick="hideModal('cart-modal-item-material')">
               Cancel
             </div>
-            <button class="cart-modal-item-material-btn-update button-white">
+            <button id="modal_item_material_add_update" class="cart-modal-item-material-btn-update button-white">
               Update
             </button>
           </div>

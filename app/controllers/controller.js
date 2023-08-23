@@ -277,6 +277,40 @@ const addItemMaterial = async function (req, res) {
     }
 };
 
+const updateItemMaterial = async function (req, res) {
+    const design_id = req.body.design_id;
+    const shop_id = req.body.shop_id;
+    const quantity = req.body.material_quantity;
+    const material = req.body.material_type;
+    const color = req.body.material_color;
+
+    try {
+        await pool.query(
+            'UPDATE user_cart_shop SET design_quantity=$1, design_color=$2 WHERE user_id=$3 AND shop_id=$4 AND design_id=$5 AND design_filament=$6',
+            [quantity, color, 1, shop_id, design_id, material]
+        );
+        res.redirect(req.get('referer'));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const removeItemMaterial = async function (req, res) {
+    const design_id = req.params.design_id;
+    const material = req.params.material;
+    const color = req.params.color;
+    try {
+        await pool.query(
+            `DELETE FROM user_cart_shop WHERE user_id=$1 AND design_id=$2 AND design_filament=$3 AND design_color=$4`,
+            [1, design_id, material, color]
+        );
+
+        res.redirect(req.get('referer'));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const getCart = async function (req, res) {
     try {
         const query_1 = await pool.query(`SELECT * FROM cart_view`);
@@ -288,16 +322,16 @@ const getCart = async function (req, res) {
         );
 
         let designs_info = query_2.rows;
-        let materials_subtotal = 0.0;
-        let item_subtotal = 0.0;
-        let material_quantity_remaining;
         let shop_selection = query_3.rows;
 
         for (i = 0; i < designs_info.length; i++) {
+            let materials_subtotal = 0.0;
+            let item_subtotal = 0.0;
+            let material_quantity_remaining;
             material_quantity_remaining = designs_info[i].qtd;
 
             let query_materials = await pool.query(
-                `SELECT * FROM cart_view_items_materials WHERE shop_id=$1 AND design_id=$2`,
+                `SELECT * FROM cart_view_items_materials WHERE shop_id=$1 AND design_id=$2 ORDER BY item_order ASC`,
                 [shop_selection[0].shop_id, designs_info[i].id]
             );
 
@@ -359,6 +393,7 @@ const getCart = async function (req, res) {
                 `SELECT * FROM shop_filament_colors WHERE shop_id=${query_3.rows[0].shop_id} `
             );
         }
+
         let shop_filament_details = query_5.rows;
 
         res.render('102-cart', {
@@ -381,6 +416,8 @@ module.exports = {
     removeShop,
     addItem,
     addItemMaterial,
+    updateItemMaterial,
+    removeItemMaterial,
     removeItem,
     updateItemQuantity,
     getCart,

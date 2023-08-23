@@ -986,6 +986,11 @@ body {
     margin-left: 1rem;
 }
 
+.cart-order-details-print-item-material-color-price {
+    display: flex;
+    gap: 0.3rem;
+}
+
 .cart-order-details-print-item-text div:nth-child(3) {
     margin-top: 0.5rem;
     font-size: 2rem;
