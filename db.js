@@ -1,10 +1,10 @@
+require('dotenv').config({ path: __dirname + '/.env' });
 const Pool = require('pg').Pool;
 
+const conString = process.env.DATABASE_URL;
+
 const pool = new Pool({
-  user: 'anselsidiadinoto',
-  host: 'localhost',
-  database: 'shapearoo_demo',
-  port: 5432,
+    connectionString: conString,
 });
 
 module.exports = pool;

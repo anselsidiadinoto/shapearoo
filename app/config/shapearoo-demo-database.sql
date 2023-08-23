@@ -1001,26 +1001,3 @@ SELECT
     INNER JOIN designs ON user_cart_shop.design_id = designs.id
     INNER JOIN shop_filaments ON user_cart_shop.shop_id = shop_filaments.shop_id 
         AND user_cart_shop.design_filament = shop_filaments.shop_filament_type;
-
--- CREATE VIEW cart_view_item_materials_price AS
--- SELECT
---     cart_view_items_materials.item_order,
---     cart_view_items_materials.user_id,
---     cart_view_items_materials.design_id,
---     cart_view_items_materials.shop_id,
---     cart_view_items_materials.design_weight,
---     cart_view_items_materials.qtd,
---     cart_view_items_materials.material,
---     cart_view_items_materials.color,
---     shop_filaments.shop_filament_price AS price
-
---     FROM cart_view_items_materials;
---     INNER JOIN 
-
-
--- \! echo "___________________________________________________________________________"
-
-
----------------- CONSOLE TEST ------------------
-
--- SELECT * FROM shop_search_filament_colors;
