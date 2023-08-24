@@ -4,14 +4,16 @@ function currentNavTab() {
     const url = window.location.href.toString();
     switch (true) {
       case checkUrl(url, '/search/item') || checkUrl(url, '/search/designer'):
-        navTabAccent('tabs-designs')
+        navTabAccent('tabs-designs');
         break;
       case checkUrl(url, '/search/shop'):
-        navTabAccent('tabs-shops')
+        navTabAccent('tabs-shops');
         break;
       case checkUrl(url, '/cart'):
-        navTabAccent('tabs-checkout')
+        navTabAccent('tabs-checkout');
         break;
+      default:
+        navTabAccent('tabs-designs');
     }
 }
   
