@@ -4,16 +4,21 @@ const { CLIENT_RENEG_LIMIT } = require('tls');
 
 const getDesigns = async function (req, res) {
     try {
-        const query = await pool.query(
+        const query_1 = await pool.query(
             'SELECT * FROM designs_search'
         );
-        const cart_length = (
-            await pool.query('SELECT * FROM user_cart_design')
-        ).rows.length;
+        const query_2 = await pool.query(
+            'SELECT * FROM user_cart_design'
+        );
+
+        const designs_info = query_1.rows;
+        const cart_length = query_2.rows.length;
+        const cart_designs_info = query_2.rows;
 
         res.render('100-browse-item', {
-            design: query.rows,
+            design: designs_info,
             cart: cart_length,
+            cart_designs: cart_designs_info,
         });
     } catch (error) {
         console.log(error);
@@ -78,6 +83,10 @@ const getDesign = async function (req, res) {
         const query_3 = await pool.query(
             `SELECT * FROM design_search_description WHERE design_id=${design_id}`
         );
+        const query_4 = await pool.query(
+            'SELECT * FROM user_cart_design'
+        );
+
         const cart_length = (
             await pool.query('SELECT * FROM user_cart_design')
         ).rows.length;
@@ -85,12 +94,14 @@ const getDesign = async function (req, res) {
         const design_info = query_1.rows;
         const design_images = query_2.rows;
         const design_description = query_3.rows;
+        const cart_designs_info = query_4.rows;
 
         res.render('101-browse-item-details', {
             design: design_info,
             images: design_images,
             description: design_description,
             cart: cart_length,
+            cart_designs: cart_designs_info,
         });
     } catch (error) {
         console.log(error);

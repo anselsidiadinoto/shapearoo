@@ -6,7 +6,7 @@ router.get('/', controller.getDesigns );
 
 router.get('/search/item', controller.getDesigns);
 
-router.get('/search/item/:id', controller.getDesign);
+router.get('/search/item/details/:id', controller.getDesign);
 
 router.get('/cart', controller.getCart);
 
@@ -20,7 +20,7 @@ router.get('/cart/remove_item_material/:design_id/:material/:color', controller.
 
 router.get('/cart/remove_item/:id', controller.removeItem);
 
-router.get('/search/shop/:id', controller.getShop);
+router.get('/search/shop/details/:id', controller.getShop);
 
 router.get('/search/shop', controller.getShops);
 
@@ -28,7 +28,7 @@ router.get('/add/shop/:id', controller.addShop);
 
 router.get('/remove_shop/:id', controller.removeShop);
 
-router.get('/search/designer/:id', controller.getDesigner);
+router.get('/search/designer/details/:id', controller.getDesigner);
 
 router.get('/add/item/:id', controller.addItem);
 

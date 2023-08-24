@@ -247,6 +247,10 @@ body {
     cursor: pointer;
 }
 
+.default-hidden {
+    display: none;
+}
+
 /* ------------------ 000-HOME ------------------ */
 
 .hero {
@@ -449,6 +453,12 @@ body {
 
     display: flex;
     align-items: end;
+    cursor: pointer;
+    transition: 0.3rem;
+}
+
+.tabs-text:hover {
+    color:#4579fc;
 }
 
 .browse-nav-tabs {

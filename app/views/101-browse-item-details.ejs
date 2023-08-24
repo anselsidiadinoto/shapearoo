@@ -13,6 +13,14 @@
     <%- include('partials/1001-browse-header-nav') %>
     <%- include('partials/1002-browse-header-search') %>
 
+    <div class="browse-items-cart-items default-hidden">
+      <% cart_designs.forEach(info => { %>
+      <div class="current-cart-item-id">
+        <%= info.design_id %>
+      </div>
+      <%  }) %>
+    </div>
+
     <div class="nav-back-container">
       <ion-icon class="medium-icon" name="chevron-back-outline"></ion-icon>
       <div class="nav-link default-link-hover" onclick="redirect('/search/item')"> back to search </div>
@@ -39,10 +47,11 @@
       <div class="browse-item-details-info">
 
         <div class="browse-item-details-info-container">
+          <div id="browse-item-details-id" class="default-hidden"><%= design[0].design_id %></div>
           <div class="browse-item-details-name">
             <%= design[0].design_name %>
           </div>
-          <div class="browse-item-details-creator default-link-hover" onclick="redirect('/search/designer/<%= design[0].designer_id %>')">
+          <div class="browse-item-details-creator default-link-hover" onclick="redirect('/search/designer/details/<%= design[0].designer_id %>')">
             By <%= design[0].designer_name %>
           </div>
           <div class="browse-item-details-rating">
@@ -70,7 +79,7 @@
             <div>Estimated print time: 30min</div>
             <div>Estimated print price: $10.00</div>
           </div>
-          <button class="browse-item-details-btn default-button" onclick="redirect('/add/item/<%= design[0].design_id %>')">add to cart</button>
+          <button id="browse-item-details-btn-id" class="browse-item-details-btn default-button" onclick="redirect('/add/item/<%= design[0].design_id %>')">add to cart</button>
 
         </div>
 

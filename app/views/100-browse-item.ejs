@@ -13,24 +13,38 @@
     <%- include('partials/1001-browse-header-nav') %>
     <%- include('partials/1002-browse-header-search') %>
 
+    <div class="browse-items-cart-items default-hidden">
+      <% cart_designs.forEach(info => { %>
+      <div class="current-cart-item-id">
+        <%= info.design_id %>
+      </div>
+      <%  }) %>
+    </div>
+
     <div class="browse-items-container">
 
       <% design.forEach(info => { %>
 
       <div class="browse-items">
+        <div class="browse-items-id default-hidden">
+          <%= info.design_id %>
+        </div>
         <div class="browse-items-display">
-          <img class="default-image-wrap default-image-hover" src="<%= info.img_url %>" alt="" onclick="redirect(`/search/item/<%= info.design_id %>`)">
+          <img class="default-image-wrap default-image-hover" src="<%= info.img_url %>" alt="" onclick="redirect(`/search/item/details/<%= info.design_id %>`)">
         </div>
         <div class="browse-items-label">
           <div class="browse-items-description">
-            <div class="browse-items-name default-link-hover" onclick="redirect(`/search/item/<%= info.design_id %>`)"><%= info.design_name %></div>
-            <div class="browse-items-creator default-link-hover" onclick="redirect(`/search/designer/<%= info.designer_id %>`)">by <%= info.designer_name %></div>
+            <div class="browse-items-name default-link-hover" onclick="redirect(`/search/item/details/<%= info.design_id %>`)"><%= info.design_name %></div>
+            <div class="browse-items-creator default-link-hover" onclick="redirect(`/search/designer/details/<%= info.designer_id %>`)">by <%= info.designer_name %></div>
           </div>
-          <button class="browse-items-btn-add default-button" onclick="redirect('/add/item/<%= info.design_id %>')">+</button>
+          <button id="browse-items-btn-<%= info.design_id %>" class="browse-items-btn-add default-button" onclick="redirect('/add/item/<%= info.design_id %>')">+</button>
         </div>
       </div>
 
       <% }) %>
+
+
+
 
     </div>
 

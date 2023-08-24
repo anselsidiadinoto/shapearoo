@@ -3,11 +3,8 @@ require('dotenv').config({ path: __dirname + '/.env' });
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-app.use(
-    express.urlencoded({
-        extended: true,
-    })
-);
+
+app.use( express.urlencoded({ extended: true, }));
 app.use(express.json());
 
 // Static Files
@@ -23,7 +20,7 @@ const router = require('./app/routes/routes');
 app.use('/', router);
 
 app.listen(process.env.PORT, function () {
-    console.log('Server is listening');
+    console.log(`Listening on port ${process.env.PORT}`);
 });
 
 // ------------ TEMPLATES FOR OTHER STATIC FILES -----------------
